@@ -1,1 +1,1 @@
-# littleTrello
+Little Trello project with login and registration (FireBase) and memorising 3 cards (ToDo, Doing, Done)

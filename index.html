@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Little Trello</title>
+  </head>
+  <body>
+    <div id="react-root"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/5.4.0/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyC_QcFOFrrX0rT0H8AonVDZ6d_jrtWaizE",
+        authDomain: "littletrello-3a909.firebaseapp.com",
+        databaseURL: "https://littletrello-3a909.firebaseio.com",
+        projectId: "littletrello-3a909",
+        storageBucket: "littletrello-3a909.appspot.com",
+        messagingSenderId: "202109904009"
+      };
+      firebase.initializeApp(config);
+    </script>
+
+    <script src="bundle.js"></script>
+  </body>
+</html>
