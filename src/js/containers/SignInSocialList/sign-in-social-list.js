@@ -7,10 +7,6 @@ export default class SignInSocialList extends Component {
   }
 
   render() {
-    if (!this.props.isSigningIn) {
-      return null;
-    }
-
     return (
       <div>
         <Social icon='fb' bgIcon='#2C5A90' text='FaceBook' bgText='#2F64A0' />

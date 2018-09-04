@@ -2,36 +2,47 @@ import React, { Component } from 'react';
 import SignIn from '../SignIn/sign-in';
 import SignInSocialList from '../SignInSocialList/sign-in-social-list';
 import SignUp from '../SignUp/sign-up';
+import { signIn, signUp } from '../../constants';
 
 export default class SignInUpContainer extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isSigningIn: true,
-      active: 'sign-in'
+      tab: signIn
     };
   }
 
-  onSignInUpClick(e) {
-    if (e.currentTarget.textContent == 'Sign In') {
-      this.setState({ active: 'sign-in' });
-      this.setState({ isSigningIn: true })
-    } else {
-      this.setState({ active: 'sign-up' });
-      this.setState({ isSigningIn: false })
-    }
+  componentWillReceiveProps() {
+    this.setTab(this.getTab());
+  }
+
+  componentDidMount() {
+    this.setTab(this.getTab());
+  }
+
+  getTab() {
+    const tab = (this.props.history.location.state)
+    ? this.props.history.location.state.tab
+    : signIn;
+
+    return tab;
+  }
+
+  setTab(tab) {
+    this.setState({ tab });
   }
 
   render() {
-    let component = (this.state.isSigningIn)
-      ? <div><SignIn isSigningIn={this.state.isSigningIn} /><SignInSocialList isSigningIn={this.state.isSigningIn} /></div>
-      : <SignUp isSigningIn={this.state.isSigningIn} />;
-    return (
+    let component = (this.state.tab === signIn)
+      ? <div><SignIn /><SignInSocialList /></div>
+      : <SignUp />;
+
+      return (
       <section className="sign-in-up">
         <div className="sign-in-up__container">
-          <div className={`sign-in-up__button ${this.state.active === 'sign-in' ? 'sign-in-up__active' : ''}`} onClick={this.onSignInUpClick.bind(this)}>Sign In</div>
-          <div className={`sign-in-up__button ${this.state.active === 'sign-up' ? 'sign-in-up__active' : ''}`} onClick={this.onSignInUpClick.bind(this)}>Sign Up</div>
+          <div data-tab={signIn} className={`sign-in-up__button ${this.state.tab === signIn ? 'sign-in-up__active' : ''}`} onClick={(e) => { this.setTab(e.currentTarget.dataset.tab) }}>Sign In</div>
+          <div data-tab={signUp} className={`sign-in-up__button ${this.state.tab === signUp ? 'sign-in-up__active' : ''}`} onClick={(e) => { this.setTab(e.currentTarget.dataset.tab) }}>Sign Up</div>
           {component}
         </div>
       </section>

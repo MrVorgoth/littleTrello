@@ -12,7 +12,9 @@ module.exports = {
   mode: 'development',
   devServer: {
     contentBase: "dist",
-    overlay: true
+    overlay: true,
+    publicPath: '',
+    historyApiFallback: true
   },
   module: {
     rules: [
