@@ -1,19 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
+import { signUserIn } from '../../actions';
 
 class SignUp extends Component {
-  renderField(field) {
-    return (
-      <div>
-        <label>{field.label}</label>
-        <input
-          type={field.type}
-          {...field.input}
-        />
-      </div>
-    );
-  }
-
   renderField(field) {
     const textError = `${field.meta.touched && field.meta.error ? field.meta.error : ''}`;
 
@@ -31,8 +21,50 @@ class SignUp extends Component {
     );
   }
 
-  onSubmit(values) {
+  updateFirebaseList(email) {
+    const db = firebase.firestore();
+    db.settings({timestampsInSnapshots: true});
+    const todo = db.collection('todo').doc(email);
+    todo.onSnapshot(doc => {
+      if (_.isEmpty(doc.data())) {
+        todo.set({ todoTasks: [] });
+      }
+    });
+  }
+
+  createAccount(values) {
     console.log(values);
+    let error = {};
+    let userData = {};
+    firebase.auth().createUserWithEmailAndPassword(values.email, values.password).catch(function(err) {
+      error = err;
+      console.log(`Error code: ${err.code}, error msg: ${err.message} `);
+    }).then(result => {
+      console.log(result);
+      userData.email = values.email;
+      userData.name = 'Janek';
+      userData.surname = 'Kowalski';
+      result.name = userData.name;
+      result.surname = userData.surname;
+      if (_.isEmpty(error)) {
+        this.updateFirebaseList(values.email);
+        this.updateUser(userData);
+        // this.props.signUserIn(values.email);
+        this.props.signUserIn(userData);
+      } else {
+        console.log('I can append something or add new div to the from with error inside');
+      }
+    });
+  }
+
+  updateUser(data) {
+    firebase.auth().currentUser.updateProfile({
+      displayName: `${data.name} ${data.surname}`
+    }).then(function() {
+      console.log('updated user data');
+    }).catch(function(error) {
+      console.log('NOT updated user data');
+    });
   }
 
   render() {
@@ -40,7 +72,7 @@ class SignUp extends Component {
 
     return (
       <div>
-        <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+        <form onSubmit={handleSubmit(this.createAccount.bind(this))}>
           <Field
             name="email"
             label="E-mail"
@@ -109,7 +141,13 @@ function validate(values) {
   return errors;
 }
 
+function mapStateToProps({ signInData }) {
+  return { signInData };
+}
+
 export default reduxForm({
   validate,
   form: 'SignUpForm'
-})(SignUp);
+})(
+  connect(mapStateToProps, { signUserIn })(SignUp)
+);

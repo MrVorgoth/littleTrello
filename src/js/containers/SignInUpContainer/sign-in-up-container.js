@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import SignIn from '../SignIn/sign-in';
 import SignInSocialList from '../SignInSocialList/sign-in-social-list';
 import SignUp from '../SignUp/sign-up';
 import { signIn, signUp } from '../../constants';
 
-export default class SignInUpContainer extends Component {
+class SignInUpContainer extends Component {
   constructor(props) {
     super(props);
 
@@ -13,11 +15,22 @@ export default class SignInUpContainer extends Component {
     };
   }
 
-  componentWillReceiveProps() {
+  componentDidMount() {
     this.setTab(this.getTab());
+    this.redirectIfSignedIn(this.props.signInData);
   }
 
-  componentDidMount() {
+  componentDidUpdate() {
+    this.redirectIfSignedIn(this.props.signInData);
+  }
+
+  redirectIfSignedIn(signInData) {
+    if (signInData.hasOwnProperty('email')) {
+      this.props.history.push('/');
+    }
+  }
+
+  componentWillReceiveProps() {
     this.setTab(this.getTab());
   }
 
@@ -49,3 +62,9 @@ export default class SignInUpContainer extends Component {
     );
   }
 }
+
+function mapStateToProps({ signInData }) {
+  return { signInData };
+}
+
+export default connect(mapStateToProps)(SignInUpContainer);
