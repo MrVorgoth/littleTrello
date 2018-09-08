@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-import SignIn from '../SignIn/sign-in';
-import SignInSocialList from '../SignInSocialList/sign-in-social-list';
-import SignUp from '../SignUp/sign-up';
+import SignIn from './SignIn/sign-in';
+import SignInSocialList from './SignInSocialList/sign-in-social-list';
+import SignUp from './SignUp/sign-up';
 import { signIn, signUp } from '../../constants';
 
-class SignInUpContainer extends Component {
+class Authentication extends Component {
   constructor(props) {
     super(props);
 
@@ -52,10 +51,10 @@ class SignInUpContainer extends Component {
       : <SignUp />;
 
       return (
-      <section className="sign-in-up">
-        <div className="sign-in-up__container">
-          <div data-tab={signIn} className={`sign-in-up__button ${this.state.tab === signIn ? 'sign-in-up__active' : ''}`} onClick={(e) => { this.setTab(e.currentTarget.dataset.tab) }}>Sign In</div>
-          <div data-tab={signUp} className={`sign-in-up__button ${this.state.tab === signUp ? 'sign-in-up__active' : ''}`} onClick={(e) => { this.setTab(e.currentTarget.dataset.tab) }}>Sign Up</div>
+      <section className="authentication">
+        <div className="authentication__container">
+          <div data-tab={signIn} className={`authentication__button ${this.state.tab === signIn ? 'authentication__active' : ''}`} onClick={(e) => { this.setTab(e.currentTarget.dataset.tab) }}>Sign In</div>
+          <div data-tab={signUp} className={`authentication__button ${this.state.tab === signUp ? 'authentication__active' : ''}`} onClick={(e) => { this.setTab(e.currentTarget.dataset.tab) }}>Sign Up</div>
           {component}
         </div>
       </section>
@@ -67,4 +66,4 @@ function mapStateToProps({ signInData }) {
   return { signInData };
 }
 
-export default connect(mapStateToProps)(SignInUpContainer);
+export default connect(mapStateToProps)(Authentication);

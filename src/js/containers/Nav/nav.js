@@ -10,9 +10,14 @@ class Nav extends Component {
     super(props);
   }
 
-  singOut() {
-    this.props.signUserOut();
-    this.props.history.push('/');
+  signOut() {
+    firebase.auth().signOut().then(() => {
+      this.props.signUserOut();
+      // this.props.history.push('/');
+    }).catch((error) => {
+      console.log(`Error code: ${error.code}, error msg: ${error.message} `);
+      console.log('I can append something or add new div to the from with error inside');
+    });
   }
 
   renderNavItems() {
@@ -23,7 +28,10 @@ class Nav extends Component {
     if (this.props.signInData.hasOwnProperty('email')) {
       return(
         <div>
-          <Link to ='/' onClick={this.singOut.bind(this)}>
+          <Link to ='/board'>
+            <button>Board</button>
+          </Link>
+          <Link to ='/' onClick={this.signOut.bind(this)}>
             <button>Sign out</button>
           </Link>
         </div>
@@ -63,4 +71,4 @@ function mapStateToProps({ signInData }) {
   return { signInData };
 }
 
-export default connect(mapStateToProps)(Nav);
+export default connect(mapStateToProps, { signUserOut })(Nav);

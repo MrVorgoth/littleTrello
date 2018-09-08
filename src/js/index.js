@@ -5,6 +5,6 @@ require("../../index.html");
 require("../css/style.scss");
 require("./firebase.config.js");
 
-require("./containers/SignInUpContainer/sign-in-up-container.scss");
-require("./containers/SignInSocial/sign-in-social.scss");
+require("./containers/Authentication/authentication.scss");
+require("./containers/Authentication/SignInSocial/sign-in-social.scss");
 require("./app.js");

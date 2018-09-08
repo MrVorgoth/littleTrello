@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { signUserIn } from '../../actions';
+import { signUserIn } from '../../../actions';
 
 class SignUp extends Component {
   renderField(field) {
@@ -32,47 +32,52 @@ class SignUp extends Component {
     });
   }
 
+  updateUser(data) {
+    firebase.auth().currentUser.updateProfile({
+      displayName: `${data.name} ${data.surname}`
+    }).then(() => {
+      const userData = ( ({ name, surname, email }) => ({ name, surname, email }) )(data);
+      console.log('updated user data');
+      this.props.signUserIn(userData);
+    }).catch((error) => {
+      console.log('NOT updated user data');
+      console.log(error);
+    });
+  }
+
   createAccount(values) {
-    console.log(values);
     let error = {};
-    let userData = {};
-    firebase.auth().createUserWithEmailAndPassword(values.email, values.password).catch(function(err) {
+    firebase.auth().createUserWithEmailAndPassword(values.email, values.password).catch((err) => {
       error = err;
       console.log(`Error code: ${err.code}, error msg: ${err.message} `);
-    }).then(result => {
-      console.log(result);
-      userData.email = values.email;
-      userData.name = 'Janek';
-      userData.surname = 'Kowalski';
-      result.name = userData.name;
-      result.surname = userData.surname;
+      console.log('I can append something or add new div to the from with error inside');
+    }).then(() => {
       if (_.isEmpty(error)) {
         this.updateFirebaseList(values.email);
-        this.updateUser(userData);
+        this.updateUser(values);
         // this.props.signUserIn(values.email);
-        this.props.signUserIn(userData);
       } else {
         console.log('I can append something or add new div to the from with error inside');
       }
     });
   }
 
-  updateUser(data) {
-    firebase.auth().currentUser.updateProfile({
-      displayName: `${data.name} ${data.surname}`
-    }).then(function() {
-      console.log('updated user data');
-    }).catch(function(error) {
-      console.log('NOT updated user data');
-    });
-  }
-
   render() {
-    const { handleSubmit } = this.props;
-
     return (
       <div>
-        <form onSubmit={handleSubmit(this.createAccount.bind(this))}>
+        <form onSubmit={this.props.handleSubmit(this.createAccount.bind(this))}>
+        <Field
+            name="name"
+            label="Name"
+            type="text"
+            component={this.renderField}
+          />
+          <Field
+            name="surname"
+            label="Surname"
+            type="text"
+            component={this.renderField}
+          />
           <Field
             name="email"
             label="E-mail"
@@ -101,8 +106,30 @@ class SignUp extends Component {
 function validate(values) {
   const errors = {};
 
+  if (!values.name) {
+    errors.name = "Enter name";
+  }
+
+  if (values.name) {
+    let regex = /^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$/;
+    if (!values.name.match(regex)) {
+      errors.name = "Name must contain only alphanumeric characters";
+    }
+  }
+
+  if (!values.surname) {
+    errors.surname = "Enter surname";
+  }
+
+  if (values.surname) {
+    let regex = /^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$/;
+    if (!values.surname.match(regex)) {
+      errors.surname = "Surname must contain only alphanumeric characters";
+    }
+  }
+
   if (!values.email) {
-    errors.email = "Enter an e-mail";
+    errors.email = "Enter e-mail";
   }
 
   if (values.email) {

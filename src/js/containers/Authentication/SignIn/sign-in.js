@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { signUserIn } from '../../actions';
+import { signUserIn } from '../../../actions';
 
 class SignIn extends Component {
   renderField(field) {
@@ -38,12 +38,13 @@ class SignIn extends Component {
     firebase.auth().signInWithEmailAndPassword(values.email, values.password).catch(function(err) {
       error = err;
       console.log(`Error code: ${err.code}, error msg: ${err.message} `);
+      console.log('I can append something or add new div to the from with error inside');
     }).then(result => {
-      console.log(result);
       if (_.isEmpty(error)) {
+        const [name, surname] = result.user.displayName.split(' ');
+        const userData = { email: values.email, name, surname };
         this.updateFirebaseList(values.email);
-        // this.props.signUserIn(values.email);
-        this.props.signUserIn(values);
+        this.props.signUserIn(userData);
       } else {
         console.log('I can append something or add new div to the from with error inside');
       }

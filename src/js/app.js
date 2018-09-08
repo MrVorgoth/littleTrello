@@ -9,7 +9,8 @@ import reducers from './reducers';
 import HomePage from './containers/HomePage/home-page';
 import Nav from './containers/Nav/nav';
 import Footer from './components/Footer/footer';
-import SignInUpContainer from './containers/SignInUpContainer/sign-in-up-container';
+import Authentication from './containers/Authentication/authentication';
+import Board from './containers/Board/board';
 
 const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 
@@ -19,7 +20,8 @@ ReactDOM.render(
       <div>
         <Nav />
           <Switch>
-            <Route path="/sign" component={SignInUpContainer} />
+            <Route path="/board" component={Board} />
+            <Route path="/sign" component={Authentication} />
             <Route path="" component={HomePage} />
           </Switch>
         <Footer />
