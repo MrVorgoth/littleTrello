@@ -52,7 +52,6 @@ class Nav extends Component {
 
   render() {
     let component = this.renderNavItems();
-    console.log(this.props.signInData);
 
     return (
       <div>

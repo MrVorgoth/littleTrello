@@ -1,0 +1,9 @@
+.board-done {
+  width: 100%;
+  color: black;
+
+  &__list {
+    background-color: greenyellow;
+    min-height: 50px;
+  }
+}
