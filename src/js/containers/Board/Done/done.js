@@ -55,7 +55,7 @@ class Done extends Component {
     }
 
     let doneTasks = this.state.doneArr.map((element, index) => {
-      return <p key={index} item={element} draggable onDragStart={this.drag.bind(this)}>{element}</p>;
+      return <p className="trello__item" key={index} item={element} draggable onDragStart={this.drag.bind(this)}>{element}</p>;
     });
 
     return doneTasks;
@@ -84,9 +84,9 @@ class Done extends Component {
     let component = this.renderDone();
 
     return (
-      <div className='board-done'>
-        <h1>Done</h1>
-        <div className='board-done__list' onDrop={this.drop.bind(this)} onDragOver={this.allowDrop.bind(this)}>
+      <div className='trello__board'>
+        <h1 className='trello__header'><span className='trello__header--border'>Done</span></h1>
+        <div className='trello__list' onDrop={this.drop.bind(this)} onDragOver={this.allowDrop.bind(this)}>
           {component}
         </div>
       </div>

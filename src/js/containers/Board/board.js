@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import ToDo from './ToDo/to-do';
+import Todo from './Todo/todo';
 import Doing from './Doing/doing';
 import Done from './Done/done';
 
@@ -22,11 +22,11 @@ class Board extends Component {
     }
 
     return (
-      <div>
-        <ToDo />
+      <section className="trello">
+        <Todo />
         <Doing />
         <Done />
-      </div>
+      </section>
     );
   }
 }

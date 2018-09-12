@@ -2,9 +2,11 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-class ToDo extends Component {
+class Todo extends Component {
   constructor(props) {
     super(props);
+
+    this.counter = 0;
 
     this.state = {
       todoArr: [],
@@ -49,30 +51,46 @@ class ToDo extends Component {
     collection.update({ [boardTasksName]: arr });
   }
 
-  renderToDo() {
+  renderTodo() {
     if (_.isEmpty(this.state.todoArr)) {
       return;
     }
 
     let todoTasks = this.state.todoArr.map((element, index) => {
-      return <p key={index} item={element} draggable onDragStart={this.drag.bind(this)}>{element}</p>;
+      return <p className="trello__item" key={index} item={element} draggable onDragStart={this.dragStart.bind(this)}>{element}</p>;
     });
 
     return todoTasks;
   }
 
-  drag(e) {
+  dragStart(e) {
     e.dataTransfer.setData('target', e.target.getAttribute('item'));
     e.dataTransfer.setData('board', this.state.board);
     e.dataTransfer.setData('boardTasks', this.state.todoArr);
   }
 
-  allowDrop(e) {
+  dragOver(e) {
     e.preventDefault();
+    this.refs.test.classList.add('trello__item--active');
+    this.refs.test.classList.remove('trello__item--hidden');
+  }
+
+  dragEnter(e) {
+    this.counter++;
+  }
+
+  dragLeave(e) {
+    this.counter--;
+
+    if (this.counter === 0) {
+      this.refs.test.classList.add('trello__item--hidden');
+      this.refs.test.classList.remove('trello__item--active');
+    }
   }
 
   drop(e) {
     e.preventDefault();
+    this.counter = 0;
     const task = e.dataTransfer.getData('target');
     const board = e.dataTransfer.getData('board');
     const boardTasks = e.dataTransfer.getData('boardTasks');
@@ -81,13 +99,15 @@ class ToDo extends Component {
   }
 
   render() {
-    let component = this.renderToDo();
+    console.log('rerender?');
+    let component = this.renderTodo();
 
     return (
-      <div className='board-todo'>
-        <h1>ToDo</h1>
-        <div className='board-todo__list' onDrop={this.drop.bind(this)} onDragOver={this.allowDrop.bind(this)}>
+      <div className='trello__board' onDrop={this.drop.bind(this)} onDragOver={this.dragOver.bind(this)} onDragEnter={this.dragEnter.bind(this)} onDragLeave={this.dragLeave.bind(this)}>
+        <h1 className='trello__header'><span className='trello__header--border'>Todo</span></h1>
+        <div className='trello__list'>
           {component}
+          <p ref="test" className='trello__item trello__item--hidden'>Place task here</p>
         </div>
       </div>
     );
@@ -98,4 +118,4 @@ function mapStateToProps({ signInData }) {
   return { signInData };
 }
 
-export default connect(mapStateToProps)(ToDo);
+export default connect(mapStateToProps)(Todo);

@@ -13,7 +13,7 @@ class Nav extends Component {
   signOut() {
     firebase.auth().signOut().then(() => {
       this.props.signUserOut();
-      // this.props.history.push('/');
+      this.props.history.push('/');
     }).catch((error) => {
       console.log(`Error code: ${error.code}, error msg: ${error.message} `);
       console.log('I can append something or add new div to the from with error inside');

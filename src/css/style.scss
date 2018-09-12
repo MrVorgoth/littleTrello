@@ -1,9 +1,31 @@
+@font-face {
+  font-family: "RobotoRegular";
+  src: url("../assets/fonts/Roboto-Regular.ttf") format("opentype");
+}
+
+@font-face {
+  font-family: "RobotoBold";
+  src: url("../assets/fonts/Roboto-Bold.ttf") format("opentype");
+}
+
+@font-face {
+  font-family: "DancingScriptRegular";
+  src: url("../assets/fonts/DancingScript-Regular.ttf") format("opentype");
+}
+
+@font-face {
+  font-family: "DancingScriptBold";
+  src: url("../assets/fonts/DancingScript-Bold.ttf") format("opentype");
+}
+
 $primary-color: white;
+$secondary-color: #49A271;
+$primary-font: "RobotoRegular";
 
 body {
   margin: 0;
   padding: 0;
   color: $primary-color;
   background-color: #444;
-  font-family: 'Arial', sans-serif;
+  font-family: $primary-font;
 }

@@ -7,6 +7,8 @@ class Doing extends Component {
   constructor(props) {
     super(props);
 
+    this.counter = 0;
+
     this.state = {
       doingArr: [],
       board: 'doing'
@@ -56,7 +58,7 @@ class Doing extends Component {
     }
 
     let doingTasks = this.state.doingArr.map((element, index) => {
-      return <p key={index} item={element} draggable onDragStart={this.drag.bind(this)}>{element}</p>;
+      return <p className="trello__item" key={index} item={element} draggable onDragStart={this.drag.bind(this)}>{element}</p>;
     });
 
     return doingTasks;
@@ -85,9 +87,9 @@ class Doing extends Component {
     let component = this.renderDoing();
 
     return (
-      <div className='board-doing'>
-        <h1>Doing</h1>
-        <div className='board-doing__list' onDrop={this.drop.bind(this)} onDragOver={this.allowDrop.bind(this)}>
+      <div className='trello__board'>
+        <h1 className='trello__header'><span className='trello__header--border'>Doing</span></h1>
+        <div className='trello__list' onDrop={this.drop.bind(this)} onDragOver={this.allowDrop.bind(this)}>
           {component}
         </div>
       </div>
