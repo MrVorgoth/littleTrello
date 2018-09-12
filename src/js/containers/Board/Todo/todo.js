@@ -75,11 +75,11 @@ class Todo extends Component {
     this.refs.test.classList.remove('trello__item--hidden');
   }
 
-  dragEnter(e) {
+  dragEnter() {
     this.counter++;
   }
 
-  dragLeave(e) {
+  dragLeave() {
     this.counter--;
 
     if (this.counter === 0) {
@@ -91,15 +91,20 @@ class Todo extends Component {
   drop(e) {
     e.preventDefault();
     this.counter = 0;
+    this.refs.test.classList.add('trello__item--hidden');
+    this.refs.test.classList.remove('trello__item--active');
     const task = e.dataTransfer.getData('target');
     const board = e.dataTransfer.getData('board');
     const boardTasks = e.dataTransfer.getData('boardTasks');
-    this.firebaseSendData(task);
-    this.firebaseDeleteData(task, board, boardTasks);
+    if (board === this.state.board) {
+      console.log('Add error modal');
+    } else {
+      this.firebaseSendData(task);
+      this.firebaseDeleteData(task, board, boardTasks);
+    }
   }
 
   render() {
-    console.log('rerender?');
     let component = this.renderTodo();
 
     return (

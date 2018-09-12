@@ -40,13 +40,13 @@ $large-device: 1200px;
   &__item {
     padding: 2%;
     font-size: 1.5em;
-    border: 1px dashed white;
     font-family: 'DancingScriptRegular';
     &--active {
-      display: block;
+      visibility: auto;
+      border: 1px dashed white;
     }
     &--hidden {
-      display: none;
+      visibility: hidden;
     }
   }
 }

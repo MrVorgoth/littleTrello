@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { firebaseGetData, firebaseSendData, firebaseDeleteData } from '../firebase';
 
 class Doing extends Component {
   constructor(props) {
@@ -58,39 +57,62 @@ class Doing extends Component {
     }
 
     let doingTasks = this.state.doingArr.map((element, index) => {
-      return <p className="trello__item" key={index} item={element} draggable onDragStart={this.drag.bind(this)}>{element}</p>;
+      return <p className="trello__item" key={index} item={element} draggable onDragStart={this.dragStart.bind(this)}>{element}</p>;
     });
 
     return doingTasks;
   }
 
-  drag(e) {
+  dragStart(e) {
     e.dataTransfer.setData('target', e.target.getAttribute('item'));
     e.dataTransfer.setData('board', this.state.board);
     e.dataTransfer.setData('boardTasks', this.state.doingArr);
   }
 
-  allowDrop(e) {
+  dragOver(e) {
     e.preventDefault();
+    this.refs.test.classList.add('trello__item--active');
+    this.refs.test.classList.remove('trello__item--hidden');
+  }
+
+  dragEnter() {
+    this.counter++;
+  }
+
+  dragLeave() {
+    this.counter--;
+
+    if (this.counter === 0) {
+      this.refs.test.classList.add('trello__item--hidden');
+      this.refs.test.classList.remove('trello__item--active');
+    }
   }
 
   drop(e) {
     e.preventDefault();
+    this.counter = 0;
+    this.refs.test.classList.add('trello__item--hidden');
+    this.refs.test.classList.remove('trello__item--active');
     const task = e.dataTransfer.getData('target');
     const board = e.dataTransfer.getData('board');
     const boardTasks = e.dataTransfer.getData('boardTasks');
-    this.firebaseSendData(task);
-    this.firebaseDeleteData(task, board, boardTasks);
+    if (board === this.state.board) {
+      console.log('Add error modal');
+    } else {
+      this.firebaseSendData(task);
+      this.firebaseDeleteData(task, board, boardTasks);
+    }
   }
 
   render() {
     let component = this.renderDoing();
 
     return (
-      <div className='trello__board'>
+      <div className='trello__board' onDrop={this.drop.bind(this)} onDragOver={this.dragOver.bind(this)} onDragEnter={this.dragEnter.bind(this)} onDragLeave={this.dragLeave.bind(this)}>
         <h1 className='trello__header'><span className='trello__header--border'>Doing</span></h1>
-        <div className='trello__list' onDrop={this.drop.bind(this)} onDragOver={this.allowDrop.bind(this)}>
+        <div className='trello__list'>
           {component}
+          <p ref="test" className='trello__item trello__item--hidden'>Place task here</p>
         </div>
       </div>
     );
