@@ -12,4 +12,5 @@ require("./containers/Authentication/SignInSocial/sign-in-social.scss");
 // require("./containers/Board/Done/done.scss");
 require("./containers/Board/board.scss");
 require("./components/Footer/footer.scss");
+require("./components/Modal/modal.scss");
 require("./app.js");

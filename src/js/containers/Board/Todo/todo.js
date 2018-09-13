@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Modal from '../../../components/Modal/modal';
 
 class Todo extends Component {
   constructor(props) {
@@ -10,7 +11,9 @@ class Todo extends Component {
 
     this.state = {
       todoArr: [],
-      board: 'todo'
+      board: 'todo',
+      modalText: '',
+      showModal: false
     };
   }
 
@@ -97,15 +100,26 @@ class Todo extends Component {
     const board = e.dataTransfer.getData('board');
     const boardTasks = e.dataTransfer.getData('boardTasks');
     if (board === this.state.board) {
-      console.log('Add error modal');
+      this.setState({ modalText: 'text from todo', showModal: true });
     } else {
       this.firebaseSendData(task);
       this.firebaseDeleteData(task, board, boardTasks);
     }
   }
 
+  handleToggleModal() {
+    this.setState({ showModal: !this.state.showModal });
+  }
+
+  displayModal() {
+    return (this.state.showModal)
+      ? <Modal onCloseRequest={() => this.handleToggleModal()} text={this.state.modalText} />
+      : null;
+  }
+
   render() {
     let component = this.renderTodo();
+    let modal = this.displayModal();
 
     return (
       <div className='trello__board' onDrop={this.drop.bind(this)} onDragOver={this.dragOver.bind(this)} onDragEnter={this.dragEnter.bind(this)} onDragLeave={this.dragLeave.bind(this)}>
@@ -114,6 +128,7 @@ class Todo extends Component {
           {component}
           <p ref="test" className='trello__item trello__item--hidden'>Place task here</p>
         </div>
+        {modal}
       </div>
     );
   }
