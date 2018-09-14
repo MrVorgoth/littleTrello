@@ -10,7 +10,7 @@ import HomePage from './containers/HomePage/home-page';
 import Nav from './containers/Nav/nav';
 import Footer from './components/Footer/footer';
 import Authentication from './containers/Authentication/authentication';
-import Board from './containers/Board/board';
+import BoardList from './containers/BoardList/board-list';
 
 const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 
@@ -20,7 +20,7 @@ ReactDOM.render(
       <div>
         <Nav />
           <Switch>
-            <Route path="/board" component={Board} />
+            <Route path="/board" component={BoardList} />
             <Route path="/sign" component={Authentication} />
             <Route path="" component={HomePage} />
           </Switch>

@@ -37,11 +37,10 @@ class SignUp extends Component {
       displayName: `${data.name} ${data.surname}`
     }).then(() => {
       const userData = ( ({ name, surname, email }) => ({ name, surname, email }) )(data);
-      console.log('updated user data');
+      console.log('Add modal here (succesfully updated)');
       this.props.signUserIn(userData);
     }).catch((error) => {
-      console.log('NOT updated user data');
-      console.log(error);
+      console.log('Add modal here (unsuccessful update)');
     });
   }
 
@@ -49,15 +48,13 @@ class SignUp extends Component {
     let error = {};
     firebase.auth().createUserWithEmailAndPassword(values.email, values.password).catch((err) => {
       error = err;
-      console.log(`Error code: ${err.code}, error msg: ${err.message} `);
-      console.log('I can append something or add new div to the from with error inside');
+      console.log('Add modal here');
     }).then(() => {
       if (_.isEmpty(error)) {
         this.updateFirebaseList(values.email);
         this.updateUser(values);
-        // this.props.signUserIn(values.email);
       } else {
-        console.log('I can append something or add new div to the from with error inside');
+        console.log('Add modal here');
       }
     });
   }

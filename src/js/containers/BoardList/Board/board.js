@@ -3,15 +3,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Modal from '../../../components/Modal/modal';
 
-class Done extends Component {
+class Board extends Component {
   constructor(props) {
     super(props);
 
     this.counter = 0;
+    this.currentBoard = '';
 
     this.state = {
-      doneArr: [],
-      board: 'done',
+      board: this.props.board,
+      boardArr: [],
+      modalText: '',
       showModal: false
     };
   }
@@ -20,24 +22,26 @@ class Done extends Component {
     this.firebaseGetData();
   }
 
+  componentDidUpdate() {
+    this.currentBoard = '';
+  }
+
   firebaseGetData() {
     const db = firebase.firestore();
     db.settings({timestampsInSnapshots: true});
     const collection = db.collection(this.state.board).doc(this.props.signInData.email);
-    const boardArr = this.state.board + 'Arr';
-    const boardTasks = this.state.board + 'Tasks';
+    let boardTasks = this.state.board + 'Tasks';
 
     collection.onSnapshot(doc => {
-      this.setState({ [boardArr]: doc.data()[boardTasks] });
+      this.setState({ boardArr: doc.data()[boardTasks] });
     });
   }
 
   firebaseSendData(task) {
     const db = firebase.firestore();
     const collection = db.collection(this.state.board).doc(this.props.signInData.email);
-    let boardArr = this.state.board + 'Arr';
     let boardTasks = this.state.board + 'Tasks';
-    let arr = this.state[boardArr];
+    let arr = this.state.boardArr;
     (arr.indexOf(task) == -1) ? arr.push(task) : console.log('Task already exists');
 
     collection.update({ [boardTasks]: arr });
@@ -53,53 +57,62 @@ class Done extends Component {
     collection.update({ [boardTasksName]: arr });
   }
 
-  renderDone() {
-    if (_.isEmpty(this.state.doneArr)) {
+  renderBoard() {
+    if (_.isEmpty(this.state.boardArr)) {
       return;
     }
 
-    let doneTasks = this.state.doneArr.map((element, index) => {
+    let boardTasks = this.state.boardArr.map((element, index) => {
       return <p className="trello__item" key={index} item={element} draggable onDragStart={this.dragStart.bind(this)}>{element}</p>;
     });
 
-    return doneTasks;
+    return boardTasks;
+  }
+
+  togglePlaceholder(displayPlaceholder) {
+    if (displayPlaceholder && (this.currentBoard !== this.state.board)) {
+      this.refs.placeholder.classList.add('trello__placeholder--active');
+      this.refs.placeholder.classList.remove('trello__placeholder--hidden');
+    } else {
+      this.refs.placeholder.classList.add('trello__placeholder--hidden');
+      this.refs.placeholder.classList.remove('trello__placeholder--active');
+    }
   }
 
   dragStart(e) {
     e.dataTransfer.setData('target', e.target.getAttribute('item'));
     e.dataTransfer.setData('board', this.state.board);
-    e.dataTransfer.setData('boardTasks', this.state.doneArr);
+    e.dataTransfer.setData('boardTasks', this.state.boardArr);
+    this.currentBoard = this.state.board;
   }
 
   dragOver(e) {
     e.preventDefault();
-    this.refs.test.classList.add('trello__item--active');
-    this.refs.test.classList.remove('trello__item--hidden');
   }
 
   dragEnter() {
     this.counter++;
+    this.togglePlaceholder(true);
   }
 
   dragLeave() {
     this.counter--;
 
     if (this.counter === 0) {
-      this.refs.test.classList.add('trello__item--hidden');
-      this.refs.test.classList.remove('trello__item--active');
+      this.togglePlaceholder(false);
     }
   }
 
   drop(e) {
     e.preventDefault();
     this.counter = 0;
-    this.refs.test.classList.add('trello__item--hidden');
-    this.refs.test.classList.remove('trello__item--active');
+    this.togglePlaceholder(false);
+
     const task = e.dataTransfer.getData('target');
     const board = e.dataTransfer.getData('board');
     const boardTasks = e.dataTransfer.getData('boardTasks');
     if (board === this.state.board) {
-      this.setState({ modalText: 'text from done', showModal: true });
+      this.setState({ modalText: 'You can\'t put task to the same board', showModal: true });
     } else {
       this.firebaseSendData(task);
       this.firebaseDeleteData(task, board, boardTasks);
@@ -117,15 +130,15 @@ class Done extends Component {
   }
 
   render() {
-    let component = this.renderDone();
+    let component = this.renderBoard();
     let modal = this.displayModal();
 
     return (
       <div className='trello__board' onDrop={this.drop.bind(this)} onDragOver={this.dragOver.bind(this)} onDragEnter={this.dragEnter.bind(this)} onDragLeave={this.dragLeave.bind(this)}>
-        <h1 className='trello__header'><span className='trello__header--border'>Done</span></h1>
+        <h1 className='trello__header'><span className='trello__header--border'>{this.props.name}</span></h1>
         <div className='trello__list'>
           {component}
-          <p ref="test" className='trello__item trello__item--hidden'>Place task here</p>
+          <p ref="placeholder" className='trello__item trello__placeholder trello__placeholder--hidden'>Place task here</p>
         </div>
         {modal}
       </div>
@@ -137,4 +150,4 @@ function mapStateToProps({ signInData }) {
   return { signInData };
 }
 
-export default connect(mapStateToProps)(Done);
+export default connect(mapStateToProps)(Board);

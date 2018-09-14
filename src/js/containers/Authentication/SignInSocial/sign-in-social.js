@@ -23,18 +23,15 @@ export default class SignInSocial extends Component {
       .catch(err => {
         error = err;
       }).then(result => {
-        console.log(result);
-        console.log(error);
         if (_.isEmpty(error)) {
           this.updateFirebaseList(result.user.email);
         } else {
-          console.log('(GOOGLE+) I can append something or add new div to the from with error inside');
+          console.log('(GOOGLE+) Add modal here');
         }
       });
   }
 
   signIn(e) {
-    console.log(this.props);
     if (this.props.text == 'Google+') {
       this.googleLogin();
     }

@@ -1,11 +1,9 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Todo from './Todo/todo';
-import Doing from './Doing/doing';
-import Done from './Done/done';
+import Board from './Board/board';
 
-class Board extends Component {
+class BoardList extends Component {
   constructor(props) {
     super(props);
   }
@@ -23,9 +21,9 @@ class Board extends Component {
 
     return (
       <section className="trello">
-        <Todo />
-        <Doing />
-        <Done />
+        <Board board='todo' name="Todo" />
+        <Board board='doing' name="Doing" />
+        <Board board='done' name="Done" />
       </section>
     );
   }
@@ -35,4 +33,4 @@ function mapStateToProps({ signInData }) {
   return { signInData };
 }
 
-export default connect(mapStateToProps)(Board);
+export default connect(mapStateToProps)(BoardList);

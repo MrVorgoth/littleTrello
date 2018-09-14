@@ -38,7 +38,7 @@ class SignIn extends Component {
     firebase.auth().signInWithEmailAndPassword(values.email, values.password).catch(function(err) {
       error = err;
       console.log(`Error code: ${err.code}, error msg: ${err.message} `);
-      console.log('I can append something or add new div to the from with error inside');
+      console.log('Add modal here');
     }).then(result => {
       if (_.isEmpty(error)) {
         const [name, surname] = result.user.displayName.split(' ');
@@ -46,7 +46,7 @@ class SignIn extends Component {
         this.updateFirebaseList(values.email);
         this.props.signUserIn(userData);
       } else {
-        console.log('I can append something or add new div to the from with error inside');
+        console.log('Add modal here');
       }
     });
   }

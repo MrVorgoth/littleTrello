@@ -1,0 +1,53 @@
+$x-small-device: 576px;
+$small-device: 768px;
+$medium-device: 992px;
+$large-device: 1200px;
+
+.trello {
+  padding: 2%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  @media screen and (max-width: $small-device) {
+    flex-direction: column;
+    padding: 5%;
+  }
+}
+
+.trello__board {
+  flex: 1;
+  margin: 1%;
+  padding: 1%;
+  background-color: #49A271;
+}
+
+.trello__header {
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.trello__header--border {
+  padding: 1% 5%;
+  border-top: 2px solid white;
+  border-bottom: 2px solid white;
+}
+
+.trello__item {
+  padding: 2%;
+  font-size: 1.5em;
+  font-family: 'DancingScriptRegular';
+}
+
+.trello__placeholder {
+  border: 1px dashed white;
+}
+
+.trello__placeholder--active {
+  visibility: auto;
+}
+
+.trello__placeholder--hidden {
+  visibility: hidden;
+}
