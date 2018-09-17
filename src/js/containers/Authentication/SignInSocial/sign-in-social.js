@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { signUserIn } from '../../../actions';
 
-export default class SignInSocial extends Component {
+class SignInSocial extends Component {
   constructor(props) {
     super(props);
   }
@@ -14,6 +16,20 @@ export default class SignInSocial extends Component {
         todo.set({ todoTasks: [] });
       }
     });
+
+    const doing = db.collection('doing').doc(email);
+    doing.onSnapshot(doc => {
+      if (_.isEmpty(doc.data())) {
+        doing.set({ doingTasks: [] });
+      }
+    });
+
+    const done = db.collection('done').doc(email);
+    done.onSnapshot(doc => {
+      if (_.isEmpty(doc.data())) {
+        done.set({ doneTasks: [] });
+      }
+    });
   }
 
   googleLogin() {
@@ -24,7 +40,12 @@ export default class SignInSocial extends Component {
         error = err;
       }).then(result => {
         if (_.isEmpty(error)) {
-          this.updateFirebaseList(result.user.email);
+          if (result.additionalUserInfo.isNewUser) {
+            this.updateFirebaseList(result.user.email);
+          }
+          const [name, surname] = result.user.displayName.split(' ');
+          const userData = { email: result.user.email, name, surname };
+          this.props.signUserIn(userData);
         } else {
           console.log('(GOOGLE+) Add modal here');
         }
@@ -48,3 +69,5 @@ export default class SignInSocial extends Component {
     );
   }
 }
+
+export default connect(null, { signUserIn })(SignInSocial);

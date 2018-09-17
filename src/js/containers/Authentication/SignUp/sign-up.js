@@ -24,12 +24,9 @@ class SignUp extends Component {
   updateFirebaseList(email) {
     const db = firebase.firestore();
     db.settings({timestampsInSnapshots: true});
-    const todo = db.collection('todo').doc(email);
-    todo.onSnapshot(doc => {
-      if (_.isEmpty(doc.data())) {
-        todo.set({ todoTasks: [] });
-      }
-    });
+    db.collection('todo').doc(email).set({ todoTasks: [] });
+    db.collection('doing').doc(email).set({ doingTasks: [] });
+    db.collection('done').doc(email).set({ doneTasks: [] });
   }
 
   updateUser(data) {

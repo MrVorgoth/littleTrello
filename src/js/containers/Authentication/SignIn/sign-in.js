@@ -22,17 +22,6 @@ class SignIn extends Component {
     );
   }
 
-  updateFirebaseList(email) {
-    const db = firebase.firestore();
-    db.settings({timestampsInSnapshots: true});
-    const todo = db.collection('todo').doc(email);
-    todo.onSnapshot(doc => {
-      if (_.isEmpty(doc.data())) {
-        todo.set({ todoTasks: [] });
-      }
-    });
-  }
-
   signInToAccount(values) {
     let error = {};
     firebase.auth().signInWithEmailAndPassword(values.email, values.password).catch(function(err) {
@@ -43,7 +32,6 @@ class SignIn extends Component {
       if (_.isEmpty(error)) {
         const [name, surname] = result.user.displayName.split(' ');
         const userData = { email: values.email, name, surname };
-        this.updateFirebaseList(values.email);
         this.props.signUserIn(userData);
       } else {
         console.log('Add modal here');
@@ -52,11 +40,9 @@ class SignIn extends Component {
   }
 
   render() {
-    const { handleSubmit } = this.props;
-
     return (
       <div>
-        <form onSubmit={handleSubmit(this.signInToAccount.bind(this))}>
+        <form onSubmit={this.props.handleSubmit(this.signInToAccount.bind(this))}>
           <Field
             name="email"
             label="E-mail"

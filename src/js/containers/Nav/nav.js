@@ -49,6 +49,7 @@ class Nav extends Component {
   }
 
   render() {
+    console.log(this.props);
     let component = this.renderNavItems();
 
     return (
