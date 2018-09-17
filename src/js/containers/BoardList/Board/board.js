@@ -129,16 +129,28 @@ class Board extends Component {
       : null;
   }
 
+  mouseDown(e) {
+    if (this.state.showModal && !e.target.className.includes('modal__')) {
+      this.handleToggleModal();
+    }
+  }
+
+  keyDown(e) {
+    if (this.state.showModal && e.keyCode === 27) {
+      this.handleToggleModal();
+    }
+  }
+
   render() {
     let component = this.renderBoard();
     let modal = this.displayModal();
 
     return (
-      <div className='trello__board' onDrop={this.drop.bind(this)} onDragOver={this.dragOver.bind(this)} onDragEnter={this.dragEnter.bind(this)} onDragLeave={this.dragLeave.bind(this)}>
+      <div tabIndex='0' onKeyDown={this.keyDown.bind(this)} onMouseDown={this.mouseDown.bind(this)} className='trello__board' onDrop={this.drop.bind(this)} onDragOver={this.dragOver.bind(this)} onDragEnter={this.dragEnter.bind(this)} onDragLeave={this.dragLeave.bind(this)}>
         <h1 className='trello__header'><span className='trello__header--border'>{this.props.name}</span></h1>
         <div className='trello__list'>
           {component}
-          <p ref="placeholder" className='trello__item trello__placeholder trello__placeholder--hidden'>Place task here</p>
+          <p ref='placeholder' className='trello__item trello__placeholder trello__placeholder--hidden'>Place task here</p>
         </div>
         {modal}
       </div>
