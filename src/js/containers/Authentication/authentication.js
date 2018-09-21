@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Nav from '../Nav/nav';
 import SignIn from './SignIn/sign-in';
 import SignInSocialList from './SignInSocialList/sign-in-social-list';
 import SignUp from './SignUp/sign-up';
@@ -50,14 +51,17 @@ class Authentication extends Component {
       ? <div><SignIn /><SignInSocialList /></div>
       : <SignUp />;
 
-      return (
-      <section className="authentication">
-        <div className="authentication__container">
-          <div data-tab={signIn} className={`authentication__button ${this.state.tab === signIn ? 'authentication__active' : ''}`} onClick={(e) => { this.setTab(e.currentTarget.dataset.tab) }}>Sign In</div>
-          <div data-tab={signUp} className={`authentication__button ${this.state.tab === signUp ? 'authentication__active' : ''}`} onClick={(e) => { this.setTab(e.currentTarget.dataset.tab) }}>Sign Up</div>
-          {component}
-        </div>
-      </section>
+    return (
+      <div>
+        <Nav transparent={false} />
+        <section className="authentication">
+          <div className="authentication__container">
+            <div data-tab={signIn} className={`authentication__button ${this.state.tab === signIn ? 'authentication__active' : ''}`} onClick={(e) => { this.setTab(e.currentTarget.dataset.tab) }}>Sign In</div>
+            <div data-tab={signUp} className={`authentication__button ${this.state.tab === signUp ? 'authentication__active' : ''}`} onClick={(e) => { this.setTab(e.currentTarget.dataset.tab) }}>Sign Up</div>
+            {component}
+          </div>
+        </section>
+      </div>
     );
   }
 }

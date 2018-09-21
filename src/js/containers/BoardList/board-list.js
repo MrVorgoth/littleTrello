@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Nav from '../Nav/nav';
 import Board from './Board/board';
 
 class BoardList extends Component {
@@ -20,11 +21,14 @@ class BoardList extends Component {
     }
 
     return (
-      <section className="trello">
-        <Board board='todo' name="Todo" />
-        <Board board='doing' name="Doing" />
-        <Board board='done' name="Done" />
-      </section>
+      <div>
+        <Nav transparent={false} />
+        <section className="trello">
+          <Board board='todo' name="Todo" />
+          <Board board='doing' name="Doing" />
+          <Board board='done' name="Done" />
+        </section>
+      </div>
     );
   }
 }

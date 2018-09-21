@@ -1,0 +1,25 @@
+.parallax {
+  height: 50vh;
+  position: relative;
+  background: url(../../../assets/img/parallax.jpg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+
+  // use it for extra effect
+  &:before {
+    position: absolute;
+    z-index: 0;
+    content: "";
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(9, 7, 11, 0.7)), to(rgba(220, 53, 69, 0.4)));
+    background: linear-gradient(to bottom, rgba(9, 7, 11, 0.7), rgba(220, 53, 69, 0.4));
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
+}

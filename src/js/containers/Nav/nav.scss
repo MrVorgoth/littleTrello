@@ -1,0 +1,49 @@
+.nav {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+
+  transition: .5s all;
+}
+
+.nav--background {
+  background: #EEE;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 1);
+}
+
+.nav__logo {
+  padding-left: 5%;
+}
+
+.nav__list {
+  padding-right: 5%;
+  list-style-type: none;
+  font-size: 1.3em;
+  font-family: 'IndieFlowerRegular';
+}
+
+.nav__list--inline {
+  display: inline-block;
+}
+
+.nav__list-item {
+  display: inline-block;
+  padding: 0 10px;
+  color: white;
+  letter-spacing: 1px;
+  transition: .5s all;
+
+  &:hover {
+    color: #CCC;
+    cursor: pointer;
+  }
+}
+
+.nav__list-item--color {
+  color:black;
+}

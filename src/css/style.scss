@@ -9,6 +9,21 @@
 }
 
 @font-face {
+  font-family: "OpenSansLight";
+  src: url("../assets/fonts/OpenSans-Light.ttf") format("opentype");
+}
+
+@font-face {
+  font-family: "OpenSansRegular";
+  src: url("../assets/fonts/OpenSans-Regular.ttf") format("opentype");
+}
+
+@font-face {
+  font-family: "OpenSansBold";
+  src: url("../assets/fonts/OpenSans-Bold.ttf") format("opentype");
+}
+
+@font-face {
   font-family: "DancingScriptRegular";
   src: url("../assets/fonts/DancingScript-Regular.ttf") format("opentype");
 }
@@ -16,6 +31,11 @@
 @font-face {
   font-family: "DancingScriptBold";
   src: url("../assets/fonts/DancingScript-Bold.ttf") format("opentype");
+}
+
+@font-face {
+  font-family: "IndieFlowerRegular";
+  src: url("../assets/fonts/IndieFlower.ttf") format("opentype");
 }
 
 $primary-color: white;
@@ -26,6 +46,5 @@ body {
   margin: 0;
   padding: 0;
   color: $primary-color;
-  background-color: #444;
   font-family: $primary-font;
 }

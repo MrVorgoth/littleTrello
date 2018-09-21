@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link as ScrollLink} from 'react-scroll';
 
 import { Link } from 'react-router-dom';
 import { signIn, signUp } from '../../constants';
@@ -24,43 +25,59 @@ class Nav extends Component {
     }
 
     if (this.props.signInData.hasOwnProperty('email')) {
-      return(
-        <div>
+      return (
+        <div className="nav__list--inline">
           <Link to ='/board'>
-            <button>Board</button>
+            <li className={`nav__list-item ${this.props.transparent === false ? 'nav__list-item--color' : ''}`}>Board</li>
           </Link>
           <Link to ='/' onClick={this.signOut.bind(this)}>
-            <button>Sign out</button>
+            <li className={`nav__list-item ${this.props.transparent === false ? 'nav__list-item--color' : ''}`}>Sign out</li>
           </Link>
         </div>
       );
     } else {
       return (
-        <div>
+        <div className="nav__list--inline">
           <Link to={{ pathname: '/sign', state: { tab: signIn } }}>
-            <button>Sign in</button>
+            <li className={`nav__list-item ${this.props.transparent === false ? 'nav__list-item--color' : ''}`}>Sign in</li>
           </Link>
           <Link to={{ pathname: '/sign', state: { tab: signUp } }}>
-            <button>Sign up</button>
+            <li className={`nav__list-item ${this.props.transparent === false ? 'nav__list-item--color' : ''}`}>Sign up</li>
           </Link>
         </div>
       );
     }
   }
 
+  renderHomePageItems() {
+    let offset = -50;
+    if (this.props.displayHomeItems) {
+      return (
+        <div className="nav__list--inline">
+          <li className={`nav__list-item ${this.props.transparent === false ? 'nav__list-item--color' : ''}`}><ScrollLink to="hero" smooth={true} offset={offset} duration={500}>Hero</ScrollLink></li>
+          <li className={`nav__list-item ${this.props.transparent === false ? 'nav__list-item--color' : ''}`}><ScrollLink to="about" smooth={true} offset={offset} duration={500}>About</ScrollLink></li>
+        </div>
+      );
+    }
+    return null;
+  }
+
   render() {
-    console.log(this.props);
     let component = this.renderNavItems();
+    let homePage = this.renderHomePageItems();
 
     return (
-      <div>
-        <nav>
+      <nav className={`nav ${this.props.transparent === false ? 'nav--background' : ''}`}>
+        <div className="nav__logo">
           <Link to="/">
-            <button>Logo</button>
+            <img src={require('../../../assets/img/logo.png')} />
           </Link>
+        </div>
+        <ul className="nav__list">
+          {homePage}
           {component}
-        </nav>
-      </div>
+        </ul>
+      </nav>
     );
   }
 }
