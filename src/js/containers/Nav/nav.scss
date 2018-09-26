@@ -1,3 +1,6 @@
+@import "../../../css/colors.scss";
+@import "../../../css/typography.scss";
+
 .nav {
   width: 100%;
   display: flex;
@@ -12,8 +15,8 @@
 }
 
 .nav--background {
-  background: #EEE;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 1);
+  background: lighten($font-color,  80%);
+  box-shadow: 2px 0 8px black;
 }
 
 .nav__logo {
@@ -22,9 +25,9 @@
 
 .nav__list {
   padding-right: 5%;
-  list-style-type: none;
   font-size: 1.3em;
   font-family: 'IndieFlowerRegular';
+  list-style-type: none;
 }
 
 .nav__list--inline {
@@ -33,13 +36,13 @@
 
 .nav__list-item {
   display: inline-block;
-  padding: 0 10px;
-  color: white;
+  padding: 0 5%;
+  color: $primary-color;
   letter-spacing: 1px;
   transition: .5s all;
 
   &:hover {
-    color: #CCC;
+    color: lighten($font-color,  60%);
     cursor: pointer;
   }
 }

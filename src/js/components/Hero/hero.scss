@@ -1,3 +1,6 @@
+@import "../../../css/colors.scss";
+@import "../../../css/typography.scss";
+
 .hero {
   position: relative;
   width: 100%;
@@ -22,7 +25,7 @@
   position: absolute;
   top: 30%;
   left: 15%;
-  color: white;
+  color: $primary-color;
 }
 
 .hero__header {
@@ -37,14 +40,14 @@
   padding: 2% 0 5%;
   letter-spacing: 1px;
   font-size: 1.5em;
-  font-family: 'OpenSansLight';
+  font-family: $secondary-font;
 }
 
 .hero__button {
   padding: 2% 7%;
   font-size: 1.1em;
   border-radius: 30px;
-  border: 2px solid white;
+  border: 2px solid $primary-color;
 
   &:focus {
     outline: none;
@@ -53,30 +56,30 @@
 
 .hero__button-start {
   margin-right: 2%;
-  background-color: white;
+  background-color: $primary-color;
   transition: .5s all;
 
   &:hover {
     cursor: pointer;
-    background-color: #DDD;
+    background-color: lighten($font-color, 70%);
   }
 }
 
 .hero__button-learn {
-  color: white;
+  color: $primary-color;
   background-color: transparent;
   transition: .5s all;
 
   &:hover {
     cursor: pointer;
-    color: #444;
-    background-color: white;
+    color: $font-color;
+    background-color: $primary-color;
   }
 }
 
 .hero__button-text {
   color: transparent;
   background-clip: text;
-  background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #FF9947), color-stop(1, #DC3545));
-  background-image: gradient(linear, left top, right top, color-stop(0, #FF9947), color-stop(1, #DC3545));
+  background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #FF9947), color-stop(1, $secondary-color));
+  background-image: gradient(linear, left top, right top, color-stop(0, #FF9947), color-stop(1, $secondary-color));
 }

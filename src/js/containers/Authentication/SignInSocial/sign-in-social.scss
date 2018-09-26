@@ -1,32 +1,29 @@
-$component-color: #49A271;
-$background-color: #FFF;
-$font-color: #333;
+@import "../../../../css/colors.scss";
+@import "../../../../css/typography.scss";
 
 .sign-in-social {
-  color: $background-color;
+  color: $primary-color;
 
   &:hover {
     cursor: pointer;
   }
+}
 
-  &__box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.sign-in-social__box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  &__icon {
-    min-width: 20%;
-    padding: 5%;
-    display: inline-block;
-    background-color: #2C5A90;
-    font-weight: bold;
-  }
+.sign-in-social__icon {
+  min-width: 20%;
+  padding: 5%;
+  display: inline-block;
+  font-weight: 700;
+}
 
-  &__text {
-    width: 80%;
-    padding: 5%;
-    display: inline-block;
-    background-color: #2F64A0;
-  }
+.sign-in-social__text {
+  width: 80%;
+  padding: 5%;
+  display: inline-block;
 }

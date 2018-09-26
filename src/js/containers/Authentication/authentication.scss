@@ -1,37 +1,36 @@
-$component-color: #49A271;
-$background-color: #FFF;
-$font-color: #333;
+@import "../../../css/colors.scss";
+@import "../../../css/typography.scss";
 
 .authentication {
   width: 100%;
   height: 100vh;
   color: $font-color;
-  background-color: $component-color;
+  background-color: $tertiary-color;
   display: flex;
   justify-content: center;
   align-items: center;
+}
 
-  &__container {
-    background-color: $background-color;
-    width: 50%;
+.authentication__container {
+  width: 50%;
+  background-color: $primary-color;
+}
+
+.authentication__button {
+  width: 50%;
+  padding: 5%;
+  box-sizing: border-box;
+  display: inline-block;
+  color: $primary-color;
+  background-color: #D4D4D4;
+  font-weight: 700;
+
+  &:hover {
+    cursor: pointer;
   }
+}
 
-  &__button {
-    width: 50%;
-    padding: 5%;
-    box-sizing: border-box;
-    display: inline-block;
-    color: $background-color;
-    background-color: #D4D4D4;
-    font-weight: bold;
-
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
-  &__active {
-    color: $font-color;
-    background-color: $background-color;
-  }
+.authentication__active {
+  color: $font-color;
+  background-color: $primary-color;
 }

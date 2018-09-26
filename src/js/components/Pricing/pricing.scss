@@ -1,0 +1,102 @@
+@import "../../../css/colors.scss";
+@import "../../../css/typography.scss";
+
+.pricing {
+  padding: 3% 10% 5%;
+  text-align: center;
+}
+
+.pricing__header {
+  margin: 0;
+  color: $secondary-color;
+  font-size: 2.5em;
+  font-family: $secondary-font;
+  font-weight: 300;
+  letter-spacing: 4px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.pricing__text {
+  margin: 0;
+  padding: 1% 15% 4%;
+  font-size: 1em;
+  letter-spacing: 1px;
+  line-height: 1.7em;
+}
+
+.pricing__list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pricing__list-item {
+  box-sizing: border-box;
+  width: 30%;
+  background-color: $secondary-color;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+  transition: .5s all;
+}
+
+.pricing__list-header {
+  padding: 4% 0;
+  font-size: 1.8em;
+  font-family: $secondary-font;
+  color: $primary-color;
+  background-color: $secondary-color;
+}
+
+.pricing__list-header-big {
+  padding: 8% 0;
+}
+
+.pricing__list-features {
+  margin: 0;
+  padding: 3% 0 3% 10%;
+  text-align: left;
+  background-color: $primary-color;
+}
+
+.pricing__list-feature {
+  list-style-type: none;
+}
+
+.pricing__list-feature-text {
+  display: inline-block;
+  margin: 0;
+  padding: 2%;
+}
+
+.pricing__list-img {
+  display: inline-block;
+}
+
+.pricing__purchase {
+  padding: 3% 0;
+  background-color: $secondary-color;
+}
+
+.pricing__purchase-big {
+  padding: 6% 0;
+}
+
+.pricing__purchase-button {
+  padding: 2% 7%;
+  font-size: 1.1em;
+  border-radius: 30px;
+  border: 2px solid $primary-color;
+  color: $primary-color;
+  background-color: $secondary-color;
+  transition: .5s all;
+
+  &:hover {
+    cursor: pointer;
+    color: $secondary-color;
+    background-color: $primary-color;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}

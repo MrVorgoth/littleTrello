@@ -1,0 +1,40 @@
+@import "../js/containers/Nav/nav.scss";
+// @import "../js/components/Hero/hero.scss";
+@import "../js/components/About/about.scss";
+// @import "../js/components/Parallax/parallax.scss";
+@import "../js/components/Carousel/carousel.scss";
+@import "../js/components/Pricing/pricing.scss";
+@import "../js/components/Footer/footer.scss";
+@import "../js/components/Modal/modal.scss";
+@import "../js/containers/Authentication/authentication.scss";
+@import "../js/containers/Authentication/SignInSocial/sign-in-social.scss";
+@import "../js/containers/BoardList/board-list.scss";
+@import "./colors.scss";
+@import "./typography.scss";
+
+@font-face {
+  font-family: "RobotoRegular";
+  src: url("../assets/fonts/Roboto-Regular.ttf") format("opentype");
+}
+
+@font-face {
+  font-family: "OpenSansLight";
+  src: url("../assets/fonts/OpenSans-Light.ttf") format("opentype");
+}
+
+@font-face {
+  font-family: "DancingScriptRegular";
+  src: url("../assets/fonts/DancingScript-Regular.ttf") format("opentype");
+}
+
+@font-face {
+  font-family: "IndieFlowerRegular";
+  src: url("../assets/fonts/IndieFlower.ttf") format("opentype");
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  color: $font-color;
+  font-family: $primary-font;
+}

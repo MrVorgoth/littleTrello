@@ -1,0 +1,36 @@
+@import "../../../css/colors.scss";
+@import "../../../css/typography.scss";
+
+.carousel {
+  width: 100%;
+  height: 60vh;
+  overflow: hidden;
+}
+
+.carousel__description {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 10% 0;
+  color: $primary-color;
+  text-align: center;
+  font-family: $secondary-font;
+  font-weight: 300;
+  letter-spacing: 1px;
+}
+
+.carousel__header {
+  width: 100%;
+  margin: 0;
+  font-size: 3em;
+  font-weight: 300;
+}
+
+.carousel__author {
+  width: 100%;
+  font-size: 1em;
+  font-style: italic;
+}

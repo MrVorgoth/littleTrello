@@ -1,9 +1,38 @@
 .footer {
+  padding: 3% 0;
   text-align: center;
-  background-color: #49A271;
+}
+
+.footer__social-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer__social-item {
+  padding: 1%;
+  margin: 0 0.5%;
+  border: 1.3px solid #CCC;
+  border-radius: 50%;
+  transition: .5s all;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #EEE;
+  }
 }
 
 .footer__text {
   margin: 0;
-  padding: 1%;
+  padding-top: 1%;
+  color: #333;
+  font-family: 'RobotoRegular';
+  letter-spacing: 1px;
+  font-size: 1em;
+}
+
+.footer__author {
+  font-family: 'IndieFlowerRegular';
+  color: #DC3545;
+  font-size: 1.4em;
 }

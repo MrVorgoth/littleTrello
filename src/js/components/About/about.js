@@ -7,7 +7,7 @@ export default class About extends Component {
       <section className="about">
         <div className="about__text-container">
           <h2 className="about__header">Features</h2>
-          <p className="about__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam congue fringilla viverra. Donec risus nulla, dapibus a sem sed, tincidunt congue sapien.</p>
+          <p className="about__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel aliquam lectus, vel molestie velit. Praesent consectetur, ipsum sit amet porttitor semper, mi nibh tempus risus, a euismod risus tellus et nisl. Mauris ac tellus in lorem sollicitudin euismod.</p>
         </div>
         <div className="about__tiles">
           <Fade bottom fraction={0.5} delay={300}>
