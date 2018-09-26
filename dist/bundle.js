@@ -5453,7 +5453,7 @@ eval("module.exports = __webpack_require__.p + \"ab10f6e72cd4bef945ebcda3c7bfaaf
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("module.exports = __webpack_require__.p + \"ece04d3eeaef833ccf276af29fab121f.svg\";\n\n//# sourceURL=webpack:///./src/assets/img/google-plus.svg?");
+eval("module.exports = __webpack_require__.p + \"76ee4cd9793f1725a6515af90cd4d020.svg\";\n\n//# sourceURL=webpack:///./src/assets/img/google-plus.svg?");
 
 /***/ }),
 
@@ -5486,7 +5486,7 @@ eval("module.exports = __webpack_require__.p + \"209647d138b1d7c1bd4ced0093e8ae3
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("module.exports = __webpack_require__.p + \"6a75b720259e558b568141bc98296bf6.svg\";\n\n//# sourceURL=webpack:///./src/assets/img/instagram.svg?");
+eval("module.exports = __webpack_require__.p + \"ed53f01ca7039fb084ff6e9a027e099a.svg\";\n\n//# sourceURL=webpack:///./src/assets/img/instagram.svg?");
 
 /***/ }),
 
@@ -5552,7 +5552,7 @@ eval("module.exports = __webpack_require__.p + \"e131356f06ac16aed3308e662132af0
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("module.exports = __webpack_require__.p + \"a594b3582b61cd2f696c0decdfaa92a0.svg\";\n\n//# sourceURL=webpack:///./src/assets/img/twitter.svg?");
+eval("module.exports = __webpack_require__.p + \"416c6d4673bb89e49242d76cc83feab8.svg\";\n\n//# sourceURL=webpack:///./src/assets/img/twitter.svg?");
 
 /***/ }),
 

@@ -42,6 +42,12 @@
   font-family: 'DancingScriptRegular';
 }
 
+.trello__item-delete {
+  float: right;
+  font-size: 0.8em;
+  font-family: $primary-font;
+}
+
 .trello__placeholder {
   border: 1px dashed $primary-color;
 }

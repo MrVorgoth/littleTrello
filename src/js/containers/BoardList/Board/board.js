@@ -51,10 +51,14 @@ class Board extends Component {
     const db = firebase.firestore();
     const collection = db.collection(board).doc(this.props.signInData.email);
     let boardTasksName = board + 'Tasks';
-    let arr = boardTasks.split(',');
+    let arr = (typeof(boardTasks) == 'string') ? boardTasks.split(',') : boardTasks;
     (arr.indexOf(task) > -1) ? arr.splice(arr.indexOf(task), 1) : console.log('Task doesnt exist');
 
     collection.update({ [boardTasksName]: arr });
+  }
+
+  deleteData(e) {
+    this.firebaseDeleteData(e.target.getAttribute('item'), this.state.board, this.state.boardArr);
   }
 
   renderBoard() {
@@ -63,7 +67,7 @@ class Board extends Component {
     }
 
     let boardTasks = this.state.boardArr.map((element, index) => {
-      return <p className="trello__item" key={index} item={element} draggable onDragStart={this.dragStart.bind(this)}>{element}</p>;
+      return <p className="trello__item" key={index} item={element} draggable onDragStart={this.dragStart.bind(this)}>{element}<span item={element} onClick={this.deleteData.bind(this)} className="trello__item-delete">x</span></p>;
     });
 
     return boardTasks;
