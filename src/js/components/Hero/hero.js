@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Link as ScrollLink} from 'react-scroll';
 import Fade from 'react-reveal/Fade';
 
 export default class Hero extends Component {
@@ -15,11 +14,9 @@ export default class Hero extends Component {
               <button className="hero__button hero__button-start"><span className="hero__button-text">Get started</span></button>
             </Fade>
           </Link>
-          <ScrollLink to="about" smooth={true} offset={-50} duration={500}>
-            <Fade bottom delay={400}>
-              <button className="hero__button hero__button-learn">Learn more</button>
-            </Fade>
-          </ScrollLink>
+          <Fade bottom delay={400}>
+            <button className="hero__button hero__button-learn">Learn more</button>
+          </Fade>
         </div>
       </section>
     );

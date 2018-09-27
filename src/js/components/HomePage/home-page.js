@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link as ScrollLink, Element, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
 import Hero from '../Hero/hero';
 import About from '../About/about';
 import Parallax from '../Parallax/parallax';
@@ -38,13 +37,9 @@ export default class HomePage extends Component {
   render() {
     return (
       <div>
-        <Nav displayHomeItems transparent={this.state.transparent} />
-        <Element name="hero">
-          <Hero />
-        </Element>
-        <Element name="about">
-          <About />
-        </Element>
+        <Nav transparent={this.state.transparent} />
+        <Hero />
+        <About />
         <Parallax header='"Little Trello is awesome"' text="John Doe, Facebook" quote />
         <Pricing />
         <Parallax header="Start using Little Trello today!" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel aliquam lectus, vel molestie velit. Praesent consectetur, ipsum sit amet porttitor semper, mi nibh tempus risus, a euismod risus tellus et nisl. Mauris ac tellus in lorem sollicitudin euismod." />
