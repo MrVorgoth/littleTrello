@@ -13,6 +13,7 @@ class Board extends Component {
     this.state = {
       board: this.props.board,
       boardArr: [],
+      term: '',
       modalText: '',
       showModal: false
     };
@@ -43,6 +44,7 @@ class Board extends Component {
     let boardTasks = this.state.board + 'Tasks';
     let arr = this.state.boardArr;
     (arr.indexOf(task) == -1) ? arr.push(task) : console.log('Task already exists');
+    // console.log(arr);
 
     collection.update({ [boardTasks]: arr });
   }
@@ -145,8 +147,19 @@ class Board extends Component {
     }
   }
 
+  renderInput() {
+    return (this.props.input)
+      ? <div className='trello__input-container'><input className='trello__input' type="text" value={this.state.term} onChange={this.updateInput.bind(this)} /><button className='trello__button' onClick={() => this.firebaseSendData(this.state.term)}>Add task</button></div>
+      : null;
+  }
+
+  updateInput(e) {
+    this.setState({ term: e.target.value });
+  }
+
   render() {
     let component = this.renderBoard();
+    let input = this.renderInput();
     let modal = this.displayModal();
 
     return (
@@ -157,6 +170,7 @@ class Board extends Component {
           <p ref='placeholder' className='trello__item trello__placeholder trello__placeholder--hidden'>Place task here</p>
         </div>
         {modal}
+        {input}
       </div>
     );
   }

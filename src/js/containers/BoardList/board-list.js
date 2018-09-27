@@ -24,7 +24,7 @@ class BoardList extends Component {
       <div>
         <Nav transparent={false} />
         <section className="trello">
-          <Board board='todo' name="Todo" />
+          <Board board='todo' name="Todo" input />
           <Board board='doing' name="Doing" />
           <Board board='done' name="Done" />
         </section>

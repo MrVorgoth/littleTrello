@@ -28,6 +28,7 @@
 .trello__header {
   text-align: center;
   letter-spacing: 1px;
+  color: $primary-color;
 }
 
 .trello__header--border {
@@ -46,6 +47,10 @@
   float: right;
   font-size: 0.8em;
   font-family: $primary-font;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .trello__placeholder {
