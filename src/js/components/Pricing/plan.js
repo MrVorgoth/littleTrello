@@ -5,8 +5,8 @@ export default class Plan extends Component {
   render () {
     return (
       <Zoom delay={this.props.delay}>
-        <div className="pricing__list-item">
-          <div className={`pricing__list-header ${this.props.big ? 'pricing__list-header-big' : ''}`}>{this.props.header} - {this.props.price}</div>
+        <div className={`pricing__list-item ${this.props.big ? 'pricing__list-item--big' : ''}`}>
+          <div className={`pricing__list-header ${this.props.big ? 'pricing__list-header--big' : ''}`}>{this.props.header} - {this.props.price}</div>
           <ul className="pricing__list-features">
             <li className="pricing__list-feature">
               <img className="pricing__list-img" alt="Pros" src={require('../../../assets/img/check.svg')} />

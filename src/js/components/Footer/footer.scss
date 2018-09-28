@@ -1,8 +1,9 @@
 @import "../../../css/colors.scss";
 @import "../../../css/typography.scss";
+@import "../../../css/breakpoints.scss";
 
 .footer {
-  padding: 3% 0 2%;
+  padding: 2% 0 1%;
   text-align: center;
   background-color: darken($primary-color, 8%);
 }
@@ -23,6 +24,21 @@
   &:hover {
     cursor: pointer;
     background-color: $primary-color;
+  }
+
+  @media screen and (max-width: $medium-device) {
+    padding: 1.2%;
+    margin: 0 1%;
+  }
+
+  @media screen and (max-width: $small-device) {
+    padding: 1.5%;
+    margin: 0 1.5%;
+  }
+
+  @media screen and (max-width: $x-small-device) {
+    padding: 2%;
+    margin: 0 2%;
   }
 }
 

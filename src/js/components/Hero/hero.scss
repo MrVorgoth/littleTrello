@@ -1,5 +1,6 @@
 @import "../../../css/colors.scss";
 @import "../../../css/typography.scss";
+@import "../../../css/breakpoints.scss";
 
 .hero {
   position: relative;
@@ -21,7 +22,6 @@
 }
 
 .hero__text-container {
-  width: 60%;
   position: absolute;
   top: 30%;
   left: 15%;
@@ -33,6 +33,14 @@
   font-size: 5em;
   font-family: 'DancingScriptRegular';
   letter-spacing: 7px;
+
+  @media screen and (max-width: $medium-device) {
+    font-size: 4em;
+  }
+
+  @media screen and (max-width: $small-device) {
+    font-size: 3em;
+  }
 }
 
 .hero__text {
@@ -41,16 +49,35 @@
   letter-spacing: 1px;
   font-size: 1.5em;
   font-family: $secondary-font;
+
+  @media screen and (max-width: $medium-device) {
+    font-size: 1.5em;
+    padding: 2% 0 7%;
+  }
+  
+  @media screen and (max-width: $small-device) {
+    font-size: 1.2em;
+    padding: 2% 0 7%;
+  }
 }
 
 .hero__button {
-  padding: 2% 7%;
+  padding: 3% 10%;
   font-size: 1.1em;
   border-radius: 30px;
   border: 2px solid $primary-color;
 
   &:focus {
     outline: none;
+  }
+
+  @media screen and (max-width: $medium-device) {
+    padding: 2% 7%;
+  }
+
+  @media screen and (max-width: $small-device) {
+    padding: 2% 6%;
+    font-size: 1em;
   }
 }
 

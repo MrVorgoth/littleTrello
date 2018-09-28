@@ -1,9 +1,14 @@
 @import "../../../css/colors.scss";
 @import "../../../css/typography.scss";
+@import "../../../css/breakpoints.scss";
 
 .pricing {
   padding: 3% 10% 5%;
   text-align: center;
+
+  @media screen and (max-width: $small-device) {
+    padding: 3% 5% 5%;
+  }
 }
 
 .pricing__header {
@@ -14,6 +19,10 @@
   font-weight: 300;
   letter-spacing: 4px;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+
+  @media screen and (max-width: $small-device) {
+    font-size: 2em;
+  }
 }
 
 .pricing__text {
@@ -22,12 +31,21 @@
   font-size: 1em;
   letter-spacing: 1px;
   line-height: 1.7em;
+
+  @media screen and (max-width: $small-device) {
+    font-size: 0.9em;
+    padding: 1% 0 4%;
+  }
 }
 
 .pricing__list {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media screen and (max-width: $small-device) {
+    flex-direction: column;
+  }
 }
 
 .pricing__list-item {
@@ -37,6 +55,17 @@
   text-align: center;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
   transition: .5s all;
+
+  @media screen and (max-width: $small-device) {
+    width: 60%;
+    margin: 3% 0;
+  }
+}
+
+.pricing__list-item--big {
+  @media screen and (max-width: $small-device) {
+    width: 75%;
+  }
 }
 
 .pricing__list-header {
@@ -45,9 +74,21 @@
   font-family: $secondary-font;
   color: $primary-color;
   background-color: $secondary-color;
+
+  @media screen and (max-width: $large-device) {
+    font-size: 1.6em;
+  }
+
+  @media screen and (max-width: $medium-device) {
+    font-size: 1.4em;
+  }
+
+  @media screen and (max-width: $small-device) {
+    font-size: 1.2em;
+  }
 }
 
-.pricing__list-header-big {
+.pricing__list-header--big {
   padding: 8% 0;
 }
 
@@ -66,6 +107,10 @@
   display: inline-block;
   margin: 0;
   padding: 2%;
+
+  @media screen and (max-width: $medium-device) {
+    font-size: 0.9em;
+  }
 }
 
 .pricing__list-img {
@@ -73,7 +118,7 @@
 }
 
 .pricing__purchase {
-  padding: 3% 0;
+  padding: 4% 0;
   background-color: $secondary-color;
 }
 
@@ -84,6 +129,7 @@
 .pricing__purchase-button {
   padding: 2% 7%;
   font-size: 1.1em;
+  font-family: 'OpenSansLight';
   border-radius: 30px;
   border: 2px solid $primary-color;
   color: $primary-color;
@@ -98,5 +144,10 @@
 
   &:focus {
     outline: none;
+  }
+
+  @media screen and (max-width: $small-device) {
+    padding: 2% 5%;
+    font-size: 1em;
   }
 }
