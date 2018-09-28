@@ -1,19 +1,36 @@
 @import "../../../css/colors.scss";
 @import "../../../css/typography.scss";
+@import "../../../css/breakpoints.scss";
 
 .authentication {
   width: 100%;
   height: 100vh;
+  position: relative;
   color: $font-color;
-  background-color: $tertiary-color;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 10vh;
+  background: url('../../../assets/img/authentication2.jpeg') no-repeat center;
+  background-size: cover;
 }
 
 .authentication__container {
-  width: 50%;
+  width: 30%;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.9);
   background-color: $primary-color;
+
+  @media screen and (max-width: $large-device) {
+    width: 50%;
+  }
+
+  @media screen and (max-width: $medium-device) {
+    width: 60%;
+  }
+
+  @media screen and (max-width: $small-device) {
+    width: 80%;
+  }
 }
 
 .authentication__button {
@@ -23,7 +40,11 @@
   display: inline-block;
   color: $primary-color;
   background-color: #D4D4D4;
-  font-weight: 700;
+  font-size: 1.2em;
+  font-weight: 500;
+  font-family: 'RobotoRegular';
+  letter-spacing: 3px;
+  text-transform: uppercase;
 
   &:hover {
     cursor: pointer;

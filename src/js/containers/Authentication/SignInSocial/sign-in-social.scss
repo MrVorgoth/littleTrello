@@ -1,7 +1,7 @@
 @import "../../../../css/colors.scss";
 @import "../../../../css/typography.scss";
 
-.sign-in-social {
+.authentication__social {
   color: $primary-color;
 
   &:hover {
@@ -9,21 +9,40 @@
   }
 }
 
-.sign-in-social__box {
+.authentication__social-item {
+  padding: 1% 3%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
 }
 
-.sign-in-social__icon {
-  min-width: 20%;
-  padding: 5%;
-  display: inline-block;
-  font-weight: 700;
+.authentication__social-item-facebook {
+  background-color: $facebook-color;
+  transition: .5s all;
+
+  &:hover {
+    background-color: darken($facebook-color, 10%);
+  }
 }
 
-.sign-in-social__text {
-  width: 80%;
-  padding: 5%;
+.authentication__social-item-google-plus {
+  background-color: $google-plus-color;
+  transition: .5s all;
+
+  &:hover {
+    background-color: darken($google-plus-color, 10%);
+  }
+}
+
+.authentication__social-icon {
+  padding: 10px;
   display: inline-block;
+  border-radius: 50%;
+  background-color: $primary-color;
+}
+
+.authentication__social-text {
+  padding: 15px;
+  display: inline-block;
+  letter-spacing: 2px;
 }

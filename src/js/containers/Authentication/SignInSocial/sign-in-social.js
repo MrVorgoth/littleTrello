@@ -53,17 +53,17 @@ class SignInSocial extends Component {
   }
 
   signIn(e) {
-    if (this.props.text == 'Google+') {
+    if (this.props.social == 'google-plus') {
       this.googleLogin();
     }
   }
 
   render() {
     return (
-      <div className="sign-in-social">
-        <div className="sign-in-social__box" onClick={this.signIn.bind(this)}>
-          <div style={{backgroundColor: this.props.bgIcon}} className="sign-in-social__icon">{this.props.icon}</div>
-          <div style={{backgroundColor: this.props.bgText}} className="sign-in-social__text">Sign in with <strong>{this.props.text}</strong></div>
+      <div className="authentication__social">
+        <div className={`authentication__social-item authentication__social-item-${this.props.social}`} onClick={this.signIn.bind(this)}>
+          <div className={`authentication__social-text`}>Sign in with</div>
+          <img className={`authentication__social-icon`} src={require(`../../../../assets/img/${this.props.social}.svg`)} />
         </div>
       </div>
     );

@@ -1,0 +1,51 @@
+@import "../../../../css/colors.scss";
+@import "../../../../css/typography.scss";
+
+.authentication__form {
+  padding: 5% 3% 3%;
+  color: $font-color;
+  text-align: center;
+}
+
+.authentication__form-item {
+  text-align: left;
+}
+
+.authentication__form-label {
+  padding: 2%;
+  display: inline-block;
+}
+
+.authentication__form-input {
+  width: 90%;
+  padding: 7px;
+  border: 2px solid darken($primary-color, 10%);
+}
+
+.authentication__form-error {
+  margin: 0;
+  padding: 2%;
+  float: right;
+  color: $secondary-color;
+  font-size: 0.8em;
+  font-family: 'OpenSansLight';
+}
+
+.authentication__form-button {
+  padding: 2% 7%;
+  margin-top: 3%;
+  font-size: 1.1em;
+  border-radius: 30px;
+  border: 2px solid darken($primary-color, 10%);
+  background-color: $primary-color;
+  font-weight: 700;
+  letter-spacing: 3px;
+  font-family: 'IndieFlowerRegular';
+  text-transform: uppercase;
+  transition: .5s all;
+
+  &:hover {
+    cursor: pointer;
+    background-color: darken($primary-color, 7%);
+  }
+}

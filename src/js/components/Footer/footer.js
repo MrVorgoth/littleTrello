@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 export default class Footer extends Component {
   render() {
     return (
-      <footer className="footer">
+      <footer className='footer'>
         <div className="footer__social-list">
           <div className="footer__social-item">
             <img className="about__tile-icon" alt="Twitter" src={require('../../../assets/img/twitter.svg')} />

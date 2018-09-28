@@ -80,6 +80,6 @@
 .hero__button-text {
   color: transparent;
   background-clip: text;
-  background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #FF9947), color-stop(1, $secondary-color));
+  background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #FF9947), color-stop(1, #DC3545));
   background-image: gradient(linear, left top, right top, color-stop(0, #FF9947), color-stop(1, $secondary-color));
 }

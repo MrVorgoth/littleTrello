@@ -7,7 +7,6 @@ import promise from 'redux-promise';
 import reducers from './reducers';
 
 import HomePage from './components/HomePage/home-page';
-import Footer from './components/Footer/footer';
 import Authentication from './containers/Authentication/authentication';
 import BoardList from './containers/BoardList/board-list';
 
@@ -22,7 +21,6 @@ ReactDOM.render(
           <Route path="/sign" component={Authentication} />
           <Route path="" component={HomePage} />
         </Switch>
-        <Footer />
       </div>
     </BrowserRouter>
   </Provider>

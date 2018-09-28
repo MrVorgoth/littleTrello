@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { signIn, signUp } from '../../constants';
 import Nav from '../Nav/nav';
 import SignIn from './SignIn/sign-in';
 import SignInSocialList from './SignInSocialList/sign-in-social-list';
 import SignUp from './SignUp/sign-up';
-import { signIn, signUp } from '../../constants';
+import Footer from '../../components/Footer/footer';
 
 class Authentication extends Component {
   constructor(props) {
@@ -53,6 +54,7 @@ class Authentication extends Component {
 
     return (
       <div>
+        {/* <Nav transparent={false} /> */}
         <Nav transparent={false} />
         <section className="authentication">
           <div className="authentication__container">
@@ -61,6 +63,7 @@ class Authentication extends Component {
             {component}
           </div>
         </section>
+        <Footer />
       </div>
     );
   }

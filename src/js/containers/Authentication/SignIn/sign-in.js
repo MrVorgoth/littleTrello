@@ -9,12 +9,11 @@ class SignIn extends Component {
     const textError = `${field.meta.touched && field.meta.error ? field.meta.error : ''}`;
 
     return (
-      <div>
-        <div>
-          <label>{field.label}</label>
-          <p>{textError}</p>
-        </div>
+      <div className="authentication__form-item">
+        <label className="authentication__form-label">{field.label}</label>
+        <p className="authentication__form-error">{textError}</p>
         <input
+          className="authentication__form-input"
           type={field.type}
           {...field.input}
         />
@@ -42,7 +41,7 @@ class SignIn extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.props.handleSubmit(this.signInToAccount.bind(this))}>
+        <form className="authentication__form" onSubmit={this.props.handleSubmit(this.signInToAccount.bind(this))}>
           <Field
             name="email"
             label="E-mail"
@@ -55,7 +54,7 @@ class SignIn extends Component {
             type="password"
             component={this.renderField}
           />
-          <button type="submit">Sign in</button>
+          <button className="authentication__form-button" type="submit">Sign in</button>
         </form>
       </div>
     );
@@ -84,6 +83,9 @@ function validate(values) {
     let regex = /^[^\s]*[0-9a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$/;
     if (!values.password.match(regex)) {
       errors.password = "Password can't contain white characters";
+    }
+    if (values.password.length < 6) {
+      errors.password = "Password needs to be at least 6 character long";
     }
   }
 

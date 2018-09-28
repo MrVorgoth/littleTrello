@@ -1,6 +1,10 @@
+@import "../../../css/colors.scss";
+@import "../../../css/typography.scss";
+
 .footer {
-  padding: 3% 0;
+  padding: 3% 0 2%;
   text-align: center;
+  background-color: darken($primary-color, 8%);
 }
 
 .footer__social-list {
@@ -12,27 +16,27 @@
 .footer__social-item {
   padding: 1%;
   margin: 0 0.5%;
-  border: 1.3px solid #CCC;
+  border: 1.3px solid darken($primary-color, 20%);
   border-radius: 50%;
   transition: .5s all;
 
   &:hover {
     cursor: pointer;
-    background-color: #EEE;
+    background-color: $primary-color;
   }
 }
 
 .footer__text {
   margin: 0;
   padding-top: 1%;
-  color: #333;
-  font-family: 'RobotoRegular';
+  color: $font-color;
+  font-family: $primary-font;
   letter-spacing: 1px;
   font-size: 1em;
 }
 
 .footer__author {
   font-family: 'IndieFlowerRegular';
-  color: #DC3545;
+  color: $secondary-color;
   font-size: 1.4em;
 }
