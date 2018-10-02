@@ -41,7 +41,10 @@ class SignIn extends Component {
   render() {
     return (
       <div>
-        <form className="authentication__form" onSubmit={this.props.handleSubmit(this.signInToAccount.bind(this))}>
+        <form
+          className="authentication__form"
+          onSubmit={this.props.handleSubmit(this.signInToAccount.bind(this))}
+        >
           <Field
             name="email"
             label="E-mail"
@@ -92,8 +95,8 @@ function validate(values) {
   return errors;
 }
 
-function mapStateToProps({ signInData }) {
-  return { signInData };
+function mapStateToProps({ authenticationData }) {
+  return { authenticationData };
 }
 
 export default reduxForm({

@@ -9,7 +9,6 @@ export function signUserIn(data) {
 
 export function signUserOut() {
   return {
-    type: SIGN_OUT,
-    payload: {}
+    type: SIGN_OUT
   }
 }

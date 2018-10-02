@@ -30,7 +30,7 @@ class Board extends Component {
   firebaseGetData() {
     const db = firebase.firestore();
     db.settings({timestampsInSnapshots: true});
-    const collection = db.collection(this.state.board).doc(this.props.signInData.email);
+    const collection = db.collection(this.state.board).doc(this.props.authenticationData.email);
     let boardTasks = this.state.board + 'Tasks';
 
     collection.onSnapshot(doc => {
@@ -40,18 +40,17 @@ class Board extends Component {
 
   firebaseSendData(task) {
     const db = firebase.firestore();
-    const collection = db.collection(this.state.board).doc(this.props.signInData.email);
+    const collection = db.collection(this.state.board).doc(this.props.authenticationData.email);
     let boardTasks = this.state.board + 'Tasks';
     let arr = this.state.boardArr;
     (arr.indexOf(task) == -1) ? arr.push(task) : console.log('Task already exists');
-    // console.log(arr);
 
     collection.update({ [boardTasks]: arr });
   }
 
   firebaseDeleteData(task, board, boardTasks) {
     const db = firebase.firestore();
-    const collection = db.collection(board).doc(this.props.signInData.email);
+    const collection = db.collection(board).doc(this.props.authenticationData.email);
     let boardTasksName = board + 'Tasks';
     let arr = (typeof(boardTasks) == 'string') ? boardTasks.split(',') : boardTasks;
     (arr.indexOf(task) > -1) ? arr.splice(arr.indexOf(task), 1) : console.log('Task doesnt exist');
@@ -69,7 +68,22 @@ class Board extends Component {
     }
 
     let boardTasks = this.state.boardArr.map((element, index) => {
-      return <p className="trello__item" key={index} item={element} draggable onDragStart={this.dragStart.bind(this)}>{element}<span item={element} onClick={this.deleteData.bind(this)} className="trello__item-delete">x</span></p>;
+      return (
+        <p
+          className="trello__item"
+          key={index}
+          item={element}
+          draggable
+          onDragStart={this.dragStart.bind(this)}
+        >{element}
+          <span
+            item={element}
+            onClick={this.deleteData.bind(this)}
+            className="trello__item-delete"
+          >x
+          </span>
+        </p>
+      );
     });
 
     return boardTasks;
@@ -117,11 +131,11 @@ class Board extends Component {
     const task = e.dataTransfer.getData('target');
     const board = e.dataTransfer.getData('board');
     const boardTasks = e.dataTransfer.getData('boardTasks');
-    if (board === this.state.board) {
-      this.setState({ modalText: 'You can\'t put task to the same board', showModal: true });
-    } else {
+    if (board !== this.state.board) {
       this.firebaseSendData(task);
       this.firebaseDeleteData(task, board, boardTasks);
+    } else {
+      // this.setState({ modalText: 'You can\'t put task to the same board', showModal: true });
     }
   }
 
@@ -149,7 +163,19 @@ class Board extends Component {
 
   renderInput() {
     return (this.props.input)
-      ? <div className='trello__input-container'><input className='trello__input' type="text" value={this.state.term} onChange={this.updateInput.bind(this)} /><button className='trello__button' onClick={() => this.firebaseSendData(this.state.term)}>Add task</button></div>
+      ? <div className='trello__input-container'>
+          <input
+            className='trello__input'
+            type="text"
+            value={this.state.term}
+            onChange={this.updateInput.bind(this)}
+          />
+          <button
+            className='trello__button'
+            onClick={() => this.firebaseSendData(this.state.term)}
+          >Add task
+          </button>
+        </div>
       : null;
   }
 
@@ -163,11 +189,26 @@ class Board extends Component {
     let modal = this.displayModal();
 
     return (
-      <div tabIndex='0' onKeyDown={this.keyDown.bind(this)} onMouseDown={this.mouseDown.bind(this)} className='trello__board' onDrop={this.drop.bind(this)} onDragOver={this.dragOver.bind(this)} onDragEnter={this.dragEnter.bind(this)} onDragLeave={this.dragLeave.bind(this)}>
-        <h1 className='trello__header'><span className='trello__header--border'>{this.props.name}</span></h1>
+      <div
+        tabIndex='0'
+        onKeyDown={this.keyDown.bind(this)}
+        onMouseDown={this.mouseDown.bind(this)}
+        className='trello__board'
+        onDrop={this.drop.bind(this)}
+        onDragOver={this.dragOver.bind(this)}
+        onDragEnter={this.dragEnter.bind(this)}
+        onDragLeave={this.dragLeave.bind(this)}
+      >
+        <h1 className='trello__header'>
+          <span className='trello__header--border'>{this.props.name}</span>
+        </h1>
         <div className='trello__list'>
           {component}
-          <p ref='placeholder' className='trello__item trello__placeholder trello__placeholder--hidden'>Place task here</p>
+          <p
+            ref='placeholder'
+            className='trello__item trello__placeholder trello__placeholder--hidden'
+          >Place task here
+          </p>
         </div>
         {modal}
         {input}
@@ -176,8 +217,8 @@ class Board extends Component {
   }
 }
 
-function mapStateToProps({ signInData }) {
-  return { signInData };
+function mapStateToProps({ authenticationData }) {
+  return { authenticationData };
 }
 
 export default connect(mapStateToProps)(Board);

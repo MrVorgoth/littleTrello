@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { signIn, signUp } from '../../constants';
+import { signInTab, signUpTab } from '../../constants';
 import Nav from '../Nav/nav';
 import SignIn from './SignIn/sign-in';
 import SignInSocialList from './SignInSocialList/sign-in-social-list';
@@ -12,22 +12,17 @@ class Authentication extends Component {
     super(props);
 
     this.state = {
-      tab: signIn
+      tab: signInTab
     };
   }
 
   componentDidMount() {
     this.setTab(this.getTab());
-    this.redirectIfSignedIn(this.props.signInData);
   }
 
   componentDidUpdate() {
-    this.redirectIfSignedIn(this.props.signInData);
-  }
-
-  redirectIfSignedIn(signInData) {
-    if (signInData.hasOwnProperty('email')) {
-      this.props.history.push('/');
+    if (!_.isEmpty(this.props.authenticationData.email)) {
+      this.props.history.push('/board');
     }
   }
 
@@ -38,7 +33,7 @@ class Authentication extends Component {
   getTab() {
     const tab = (this.props.history.location.state)
     ? this.props.history.location.state.tab
-    : signIn;
+    : signInTab;
 
     return tab;
   }
@@ -48,18 +43,27 @@ class Authentication extends Component {
   }
 
   render() {
-    let component = (this.state.tab === signIn)
+    let component = (this.state.tab === signInTab)
       ? <div><SignIn /><SignInSocialList /></div>
       : <SignUp />;
 
     return (
       <div>
-        {/* <Nav transparent={false} /> */}
         <Nav transparent={false} />
         <section className="authentication">
           <div className="authentication__container">
-            <div data-tab={signIn} className={`authentication__button ${this.state.tab === signIn ? 'authentication__active' : ''}`} onClick={(e) => { this.setTab(e.currentTarget.dataset.tab) }}>Sign In</div>
-            <div data-tab={signUp} className={`authentication__button ${this.state.tab === signUp ? 'authentication__active' : ''}`} onClick={(e) => { this.setTab(e.currentTarget.dataset.tab) }}>Sign Up</div>
+            <div
+              data-tab={signInTab}
+              className={`authentication__button ${this.state.tab === signInTab ? 'authentication__active' : ''}`}
+              onClick={(e) => { this.setTab(e.currentTarget.dataset.tab) }}
+            >Sign In
+            </div>
+            <div
+              data-tab={signUpTab}
+              className={`authentication__button ${this.state.tab === signUpTab ? 'authentication__active' : ''}`}
+              onClick={(e) => { this.setTab(e.currentTarget.dataset.tab) }}
+            >Sign Up
+            </div>
             {component}
           </div>
         </section>
@@ -69,8 +73,8 @@ class Authentication extends Component {
   }
 }
 
-function mapStateToProps({ signInData }) {
-  return { signInData };
+function mapStateToProps({ authenticationData }) {
+  return { authenticationData };
 }
 
 export default connect(mapStateToProps)(Authentication);

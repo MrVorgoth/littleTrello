@@ -167,8 +167,8 @@ function validate(values) {
   return errors;
 }
 
-function mapStateToProps({ signInData }) {
-  return { signInData };
+function mapStateToProps({ authenticationData }) {
+  return { authenticationData };
 }
 
 export default reduxForm({

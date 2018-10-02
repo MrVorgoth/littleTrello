@@ -27,59 +27,27 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [
-          { loader: 'style-loader' },
-          { loader: 'css-loader' }
-        ]
+        use: [{ loader: 'style-loader' }, { loader: 'css-loader' }]
       },
       {
         test: /\.scss$/,
-        use: [
-          { loader: 'style-loader' },
-          { loader: 'css-loader' },
-          { loader: 'postcss-loader' },
-          { loader: 'sass-loader' }
-        ]
+        use: [{ loader: 'style-loader' }, { loader: 'css-loader' }, { loader: 'postcss-loader' }, { loader: 'sass-loader' }]
       },
       {
         test: /\.html$/,
         use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].html'
-            }
-          },
+          { loader: 'file-loader', options: { name: '[name].html' }},
           { loader: 'extract-loader' },
-          {
-            loader: 'html-loader',
-            options: {
-              attrs: ["img:src"]
-            }
-          }
+          { loader: 'html-loader', options: { attrs: ["img:src"] }}
         ]
       },
       {
         test: /\.(jpg|jpeg|png|gif|ico)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              filename: 'assets/[name].[ext]'
-            }
-          }
-        ]
+        use: [{ loader: 'file-loader', options: { filename: 'assets/[name].[ext]' }}]
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              filename: 'assets/[name].[ext]'
-            }
-          }
-        ]
+        use: [{ loader: 'file-loader', options: { filename: 'assets/[name].[ext]' }}]
       }
     ]
   }

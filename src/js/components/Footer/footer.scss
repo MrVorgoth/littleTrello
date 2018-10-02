@@ -15,7 +15,7 @@
 }
 
 .footer__social-item {
-  padding: 1%;
+  padding: 1% 1.1%;
   margin: 0 0.5%;
   border: 1.3px solid darken($primary-color, 20%);
   border-radius: 50%;
@@ -27,17 +27,17 @@
   }
 
   @media screen and (max-width: $medium-device) {
-    padding: 1.2%;
+    padding: 1.2% 1.4%;
     margin: 0 1%;
   }
 
   @media screen and (max-width: $small-device) {
-    padding: 1.5%;
+    padding: 1.5% 1.8%;
     margin: 0 1.5%;
   }
 
   @media screen and (max-width: $x-small-device) {
-    padding: 2%;
+    padding: 2% 2.4%;
     margin: 0 2%;
   }
 }

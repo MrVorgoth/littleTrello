@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Fade from 'react-reveal/Fade';
+import Tile from './about-tile';
 
 export default class About extends Component {
   render() {
@@ -11,25 +12,25 @@ export default class About extends Component {
         </div>
         <div className="about__tiles">
           <Fade bottom fraction={0.5} delay={300}>
-            <div className="about__tile">
-              <img className="about__tile-icon" src={require('../../../assets/img/tasks.svg')} />
-              <div className="about__tile-header">Manage tasks</div>
-              <div className="about__tile-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-            </div>
+            <Tile
+              img = 'tasks'
+              header ='Manage tasks'
+              text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+            />
           </Fade>
           <Fade bottom fraction={0.5} delay={500}>
-            <div className="about__tile">
-              <img className="about__tile-icon" src={require('../../../assets/img/hourglass-start.svg')} />
-              <div className="about__tile-header">Save time</div>
-              <div className="about__tile-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-            </div>
+            <Tile
+              img = 'hourglass-start'
+              header ='Save time'
+              text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+            />
           </Fade>
           <Fade bottom fraction={0.5} delay={700}>
-            <div className="about__tile">
-              <img className="about__tile-icon" src={require('../../../assets/img/wrench.svg')} />
-              <div className="about__tile-header">Maintance</div>
-              <div className="about__tile-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-            </div>
+            <Tile
+              img = 'wrench'
+              header ='Maintance'
+              text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+            />
           </Fade>
         </div>
       </section>

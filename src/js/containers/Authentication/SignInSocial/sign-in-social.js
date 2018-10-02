@@ -61,9 +61,14 @@ class SignInSocial extends Component {
   render() {
     return (
       <div className="authentication__social">
-        <div className={`authentication__social-item authentication__social-item-${this.props.social}`} onClick={this.signIn.bind(this)}>
+        <div
+          className={`authentication__social-item authentication__social-item-${this.props.social}`}
+          onClick={this.signIn.bind(this)}>
           <div className={`authentication__social-text`}>Sign in with</div>
-          <img className={`authentication__social-icon`} src={require(`../../../../assets/img/${this.props.social}.svg`)} />
+          <img
+            className={`authentication__social-icon`}
+            src={require(`../../../../assets/img/${this.props.social}.svg`)}
+          />
         </div>
       </div>
     );

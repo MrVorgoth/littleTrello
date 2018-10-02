@@ -9,15 +9,9 @@ class BoardList extends Component {
     super(props);
   }
 
-  componentWillMount() {
-    if (_.isEmpty(this.props.signInData)) {
-      this.props.history.push('/');
-    }
-  }
-
   render() {
-    if (_.isEmpty(this.props.signInData)) {
-      return '';
+    if (_.isEmpty(this.props.authenticationData)) {
+      return null;
     }
 
     return (
@@ -33,8 +27,8 @@ class BoardList extends Component {
   }
 }
 
-function mapStateToProps({ signInData }) {
-  return { signInData };
+function mapStateToProps({ authenticationData }) {
+  return { authenticationData };
 }
 
 export default connect(mapStateToProps)(BoardList);

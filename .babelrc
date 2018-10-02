@@ -11,5 +11,6 @@
     ],
     "babel-preset-react"
   ],
-  "plugins": "transform-runtime"
+  "plugins": "transform-runtime",
+  "plugins": ["transform-object-rest-spread"]
 }

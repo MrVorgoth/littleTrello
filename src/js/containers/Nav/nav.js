@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { Link } from 'react-router-dom';
-import { signIn, signUp } from '../../constants';
+import { signInTab, signUpTab } from '../../constants';
 import { signUserOut } from '../../actions';
 
 class Nav extends Component {
@@ -19,11 +19,11 @@ class Nav extends Component {
   }
 
   renderNavItems() {
-    if (!this.props.signInData) {
+    if (_.isEmpty(this.props.authenticationData)) {
       return;
     }
 
-    if (this.props.signInData.hasOwnProperty('email')) {
+    if (!_.isEmpty(this.props.authenticationData.email)) {
       return (
         <ul className="nav__list">
           <Link to ='/board'>
@@ -37,10 +37,10 @@ class Nav extends Component {
     } else {
       return (
         <ul className="nav__list">
-          <Link to={{ pathname: '/sign', state: { tab: signIn } }}>
+          <Link to={{ pathname: '/sign', state: { tab: signInTab } }}>
             <li className={`nav__list-item ${this.props.transparent === false ? 'nav__list-item--color' : ''}`}>Sign in</li>
           </Link>
-          <Link to={{ pathname: '/sign', state: { tab: signUp } }}>
+          <Link to={{ pathname: '/sign', state: { tab: signUpTab } }}>
             <li className={`nav__list-item ${this.props.transparent === false ? 'nav__list-item--color' : ''}`}>Sign up</li>
           </Link>
         </ul>
@@ -49,6 +49,7 @@ class Nav extends Component {
   }
 
   render() {
+    console.log(this.props.authenticationData);
     let component = this.renderNavItems();
 
     return (
@@ -64,8 +65,8 @@ class Nav extends Component {
   }
 }
 
-function mapStateToProps({ signInData }) {
-  return { signInData };
+function mapStateToProps({ authenticationData }) {
+  return { authenticationData };
 }
 
 export default connect(mapStateToProps, { signUserOut })(Nav);
