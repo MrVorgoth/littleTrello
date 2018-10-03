@@ -32,9 +32,9 @@ class SignInSocial extends Component {
     });
   }
 
-  googleLogin() {
+  authenticatePopup(socialProvider) {
     let error = {};
-    const provider = new firebase.auth.GoogleAuthProvider();
+    const provider = new firebase.auth[`${socialProvider}AuthProvider`]();
     firebase.auth().signInWithPopup(provider)
       .catch(err => {
         error = err;
@@ -47,14 +47,19 @@ class SignInSocial extends Component {
           const userData = { email: result.user.email, name, surname };
           this.props.signUserIn(userData);
         } else {
-          console.log('(GOOGLE+) Add modal here');
+          console.log(`${socialProvider} Add modal here`);
         }
       });
   }
 
-  signIn(e) {
-    if (this.props.social == 'google-plus') {
-      this.googleLogin();
+  signIn() {
+    switch(this.props.social) {
+      case 'google-plus':
+        this.authenticatePopup('Google');
+        break;
+      case 'facebook':
+        this.authenticatePopup('Facebook');
+        break;
     }
   }
 

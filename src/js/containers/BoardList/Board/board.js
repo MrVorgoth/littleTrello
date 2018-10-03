@@ -34,7 +34,9 @@ class Board extends Component {
     let boardTasks = this.state.board + 'Tasks';
 
     collection.onSnapshot(doc => {
-      this.setState({ boardArr: doc.data()[boardTasks] });
+      if (doc.data() !== undefined) {
+        this.setState({ boardArr: doc.data()[boardTasks] });
+      }
     });
   }
 
