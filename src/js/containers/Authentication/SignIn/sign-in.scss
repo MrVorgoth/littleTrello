@@ -48,4 +48,8 @@
     cursor: pointer;
     background-color: darken($primary-color, 7%);
   }
+
+  &:focus {
+    outline: none;
+  }
 }

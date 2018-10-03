@@ -54,7 +54,12 @@ class Board extends Component {
     const db = firebase.firestore();
     const collection = db.collection(board).doc(this.props.authenticationData.email);
     let boardTasksName = board + 'Tasks';
-    let arr = (typeof(boardTasks) == 'string') ? boardTasks.split(',') : boardTasks;
+    let arr = boardTasks;
+    // let arr = (typeof(boardTasks) == 'string') ? boardTasks.split(',') : boardTasks;
+    // console.log(arr);
+    // console.log(task);
+    console.log(_.includes(arr, task));
+    console.log(_.indexOf(arr, task));
     (arr.indexOf(task) > -1) ? arr.splice(arr.indexOf(task), 1) : console.log('Task doesnt exist');
 
     collection.update({ [boardTasksName]: arr });
@@ -104,7 +109,7 @@ class Board extends Component {
   dragStart(e) {
     e.dataTransfer.setData('target', e.target.getAttribute('item'));
     e.dataTransfer.setData('board', this.state.board);
-    e.dataTransfer.setData('boardTasks', this.state.boardArr);
+    e.dataTransfer.setData('boardTasks', this.state.boardArr.join('|'));
     this.currentBoard = this.state.board;
   }
 
@@ -135,7 +140,7 @@ class Board extends Component {
     const boardTasks = e.dataTransfer.getData('boardTasks');
     if (board !== this.state.board) {
       this.firebaseSendData(task);
-      this.firebaseDeleteData(task, board, boardTasks);
+      this.firebaseDeleteData(task, board, boardTasks.split('|'));
     } else {
       // this.setState({ modalText: 'You can\'t put task to the same board', showModal: true });
     }

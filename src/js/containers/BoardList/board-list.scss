@@ -1,24 +1,31 @@
 @import "../../../css/colors.scss";
+@import "../../../css/typography.scss";
 @import "../../../css/breakpoints.scss";
 
+.trello-container {
+  min-height: 75vh;
+  padding: 25vh 0 15vh;
+  background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #af8b8b), color-stop(1, #4578a5));
+}
+
 .trello {
-  padding: 10% 2%;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
+  padding-bottom: 3%;
+  overflow-x: auto;
 
   @media screen and (max-width: $small-device) {
-    flex-direction: column;
     padding: 5%;
   }
 }
 
 .trello__board {
-  flex: 1;
-  margin: 1%;
-  padding: 1%;
-  background-color: $tertiary-color;
+  position: relative;
+  margin: 2%;
+  padding: 1% 1% 6%;
+  min-width: 350px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  background-color: #A7B8D2;
 
   &:focus {
     outline: none;
@@ -40,7 +47,9 @@
 .trello__item {
   padding: 2%;
   font-size: 1.5em;
+  letter-spacing: 2px;
   font-family: 'DancingScriptRegular';
+  background-color: $primary-color;
 }
 
 .trello__item-delete {
@@ -63,4 +72,37 @@
 
 .trello__placeholder--hidden {
   visibility: hidden;
+}
+
+.trello__input-container {
+  position: absolute;
+  width: 100%;
+  bottom: 3%;
+}
+
+.trello__input {
+  padding: 7px;
+  margin-right: 5%;
+  border: 2px solid darken($primary-color, 10%);
+}
+
+.trello__button {
+  padding: 1% 4%;
+  font-size: 1em;
+  border-radius: 30px;
+  border: 2px solid darken($primary-color, 10%);
+  background-color: $primary-color;
+  font-weight: 700;
+  letter-spacing: 3px;
+  font-family: 'IndieFlowerRegular';
+  transition: .5s all;
+
+  &:hover {
+    cursor: pointer;
+    background-color: darken($primary-color, 7%);
+  }
+
+  &:focus {
+    outline: none;
+  }
 }

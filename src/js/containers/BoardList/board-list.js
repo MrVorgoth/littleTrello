@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Nav from '../Nav/nav';
+import Footer from '../../components/Footer/footer';
 import Board from './Board/board';
 
 class BoardList extends Component {
@@ -17,11 +18,14 @@ class BoardList extends Component {
     return (
       <div>
         <Nav transparent={false} />
-        <section className="trello">
-          <Board board='todo' name="Todo" input />
-          <Board board='doing' name="Doing" />
-          <Board board='done' name="Done" />
-        </section>
+        <div className="trello-container">
+          <section className="trello">
+            <Board board='todo' name="Todo" input />
+            <Board board='doing' name="Doing" />
+            <Board board='done' name="Done" />
+          </section>
+        </div>
+        <Footer />
       </div>
     );
   }
