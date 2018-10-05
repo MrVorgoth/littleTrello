@@ -1,51 +1,25 @@
-import axios from 'axios';
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { signUserIn } from '../../actions';
-import { config } from '../../firebase.config';
 
 class TokenAuth extends Component {
   constructor(props) {
     super(props);
   }
 
-  setLocalStorage(data) {
-    console.log('set localStorage data here ...');
-  }
-
-  signInWithToken() {
-    firebase.auth().signInWithCustomToken(localStorage.getItem("accessToken"))
-      .catch(err => {
-        console.log(err);
-        return;
-      })
-      .then(result => {
-        console.log('logged in with token :)');
-        console.log(result);
-      });
-  }
-
   refreshToken() {
-    console.log('tutaj sprawdzac tez expires (na kazdej akcji i tak to sie bedzie resetowalo, ale jak ktos zostawi przegladarke na >3600 sekund to wtedy go wylogujemy i expires in sie nie bedzie zgadzac :)');
-    if (!localStorage.getItem("refreshToken")) {
-      console.log('not in localStorage');
+    if (!_.isEmpty(this.props.authenticationData.email)) {
       return;
     }
-    axios.post(`https://securetoken.googleapis.com/v1/token?key=${config.apiKey}`, {
-      grant_type: 'refresh_token',
-      refresh_token: localStorage.getItem("refreshToken")
-    })
-    .then(response => {
-      if (response.status === 200) {
-        console.log(response);
-        localStorage.setItem('accessToken', response.data.access_token);
-        localStorage.setItem('tokenExpiresIn', response.data.expires_in);
-        localStorage.setItem('refreshToken', response.data.refresh_token);
-        this.signInWithToken();
+
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        console.log('TEST !!! 111', user);
+        const [name, surname] = user.displayName.split(' ');
+        const userData = { email: user.email, name, surname };
+        this.props.signUserIn(userData);
       }
-    })
-    .catch(error => {
-      console.log(error);
     });
   }
 
