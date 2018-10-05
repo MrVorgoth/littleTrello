@@ -39,6 +39,7 @@ class SignInSocial extends Component {
       .catch(err => {
         error = err;
       }).then(result => {
+        console.log(result);
         if (_.isEmpty(error)) {
           if (result.additionalUserInfo.isNewUser) {
             this.updateFirebaseList(result.user.email);
