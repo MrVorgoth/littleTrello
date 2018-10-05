@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Modal from '../../../components/Modal/modal';
+import AdvancedEdit from './board-advanced-edit';
 
 class Board extends Component {
   constructor(props) {
@@ -15,7 +16,9 @@ class Board extends Component {
       boardArr: [],
       term: '',
       modalText: '',
-      showModal: false
+      showModal: false,
+      showAdvancedEdit: false,
+      editTask: { task: '', board: '', tasks: '' }
     };
   }
 
@@ -55,11 +58,6 @@ class Board extends Component {
     const collection = db.collection(board).doc(this.props.authenticationData.email);
     let boardTasksName = board + 'Tasks';
     let arr = boardTasks;
-    // let arr = (typeof(boardTasks) == 'string') ? boardTasks.split(',') : boardTasks;
-    // console.log(arr);
-    // console.log(task);
-    console.log(_.includes(arr, task));
-    console.log(_.indexOf(arr, task));
     (arr.indexOf(task) > -1) ? arr.splice(arr.indexOf(task), 1) : console.log('Task doesnt exist');
 
     collection.update({ [boardTasksName]: arr });
@@ -83,12 +81,11 @@ class Board extends Component {
           draggable
           onDragStart={this.dragStart.bind(this)}
         >{element}
-          <span
-            item={element}
-            onClick={this.deleteData.bind(this)}
-            className="trello__item-delete"
-          >x
-          </span>
+        <span
+          item={element}
+          className="trello__item-advanced-button"
+          onClick={() => this.createAdvancedOptions(element, this.state.board, this.state.boardArr)}
+        ></span>
         </p>
       );
     });
@@ -160,12 +157,46 @@ class Board extends Component {
     if (this.state.showModal && !e.target.className.includes('modal__')) {
       this.handleToggleModal();
     }
+    if (this.state.showAdvancedEdit && !e.target.className.includes('trello__item-advanced')) {
+      this.toggleAdvancedOptions();
+    }
+    // if (e.target.className.includes('trello__item-advanced-option')) {
+    //   this.toggleAdvancedOptions();
+    // }
   }
 
   keyDown(e) {
     if (this.state.showModal && e.keyCode === 27) {
       this.handleToggleModal();
     }
+    if (this.state.showAdvancedEdit && e.keyCode === 27) {
+      this.toggleAdvancedOptions();
+    }
+  }
+
+  createAdvancedOptions(task, board, tasks) {
+    this.setState({ editTask: { task, board, tasks } });
+    this.toggleAdvancedOptions();
+  }
+
+  toggleAdvancedOptions(event) {
+    // let rect = event.target.getBoundingClientRect();
+    // console.log(window.innerHeight);
+    // console.log(rect);
+    // console.log(event.parent);
+    (event)
+      ? this.setState({
+        showAdvancedEdit: !this.state.showAdvancedEdit
+      })
+      : this.setState({
+        showAdvancedEdit: !this.state.showAdvancedEdit
+      });
+  }
+
+  displayAdvancedEdit() {
+    return (this.state.showAdvancedEdit)
+      ? <AdvancedEdit editTask={this.state.editTask} />
+      : null;
   }
 
   renderInput() {
@@ -194,6 +225,7 @@ class Board extends Component {
     let component = this.renderBoard();
     let input = this.renderInput();
     let modal = this.displayModal();
+    let advancedEdit = this.displayAdvancedEdit();
 
     return (
       <div
@@ -219,6 +251,7 @@ class Board extends Component {
         </div>
         {modal}
         {input}
+        {advancedEdit}
       </div>
     );
   }

@@ -44,6 +44,10 @@
   border-bottom: 2px solid $primary-color;
 }
 
+.trello__item-container {
+  position: relative;
+}
+
 .trello__item {
   padding: 2%;
   font-size: 1.5em;
@@ -52,7 +56,8 @@
   background-color: $primary-color;
 }
 
-.trello__item-delete {
+.trello__item-delete,
+.trello__item-advanced-button {
   float: right;
   font-size: 0.8em;
   font-family: $primary-font;
@@ -60,6 +65,23 @@
   &:hover {
     cursor: pointer;
   }
+}
+
+.trello__item-advanced-button {
+  width: 20px;
+  height: 20px;
+  background: url('../../../assets/img/bars.svg') no-repeat center;
+  background-size: cover;
+}
+
+.trello__item-advanced-container {
+  position: absolute;
+  top: 27%;
+  right: 12%;
+  z-index: 2;
+  padding: 2%;
+  color: $primary-color;
+  background-color: #8596B0;
 }
 
 .trello__placeholder {
