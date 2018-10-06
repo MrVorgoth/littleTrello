@@ -8,14 +8,13 @@ class TokenAuth extends Component {
     super(props);
   }
 
-  refreshToken() {
+  checkIfUserIsSignedIn() {
     if (!_.isEmpty(this.props.authenticationData.email)) {
       return;
     }
 
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        console.log('TEST !!! 111', user);
         const [name, surname] = user.displayName.split(' ');
         const userData = { email: user.email, name, surname };
         this.props.signUserIn(userData);
@@ -24,8 +23,7 @@ class TokenAuth extends Component {
   }
 
   render() {
-    this.refreshToken();
-    console.log('Token Auth Container');
+    this.checkIfUserIsSignedIn();
     return null;
   }
 }

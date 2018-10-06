@@ -28,11 +28,9 @@ class SignIn extends Component {
       console.log(`Error code: ${err.code}, error msg: ${err.message} `);
       console.log('Add modal here');
     }).then(result => {
-      console.log(result);
       if (_.isEmpty(error)) {
         const [name, surname] = result.user.displayName.split(' ');
         const userData = { email: values.email, name, surname };
-        localStorage.setItem('refreshToken', result.user.refreshToken);
         this.props.signUserIn(userData);
       } else {
         console.log('Add modal here');
