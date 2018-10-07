@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { signUserIn } from '../../../actions';
+import Modal from '../../../components/Modal/modal';
 
 class SignInSocial extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      modalText: '',
+      showModal: false
+    };
   }
 
   updateFirebaseList(email) {
@@ -47,7 +53,7 @@ class SignInSocial extends Component {
           const userData = { email: result.user.email, name, surname };
           this.props.signUserIn(userData);
         } else {
-          console.log(`${socialProvider} Add modal here`);
+          this.setState({ modalText: 'Something went wrong. Please try again', showModal: true });
         }
       });
   }
@@ -63,7 +69,31 @@ class SignInSocial extends Component {
     }
   }
 
+  toggleModal() {
+    this.setState({ showModal: !this.state.showModal });
+  }
+
+  displayModal() {
+    return (this.state.showModal)
+      ? <Modal onCloseRequest={() => this.toggleModal()} text={this.state.modalText} />
+      : null;
+  }
+
+  mouseDown(e) {
+    if (this.state.showModal && !e.target.className.includes('modal__')) {
+      this.toggleModal();
+    }
+  }
+
+  keyDown(e) {
+    if (this.state.showModal && e.keyCode === 27) {
+      this.toggleModal();
+    }
+  }
+
   render() {
+    let modal = this.displayModal();
+
     return (
       <div className="authentication__social">
         <div
@@ -75,6 +105,7 @@ class SignInSocial extends Component {
             src={require(`../../../../assets/img/${this.props.social}.svg`)}
           />
         </div>
+        {modal}
       </div>
     );
   }

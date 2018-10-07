@@ -3,8 +3,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { signUserIn } from '../../../actions';
+import Modal from '../../../components/Modal/modal';
 
 class SignIn extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      modalText: '',
+      showModal: false
+    };
+  }
+
   renderField(field) {
     const textError = `${field.meta.touched && field.meta.error ? field.meta.error : ''}`;
 
@@ -25,20 +35,43 @@ class SignIn extends Component {
     let error = {};
     firebase.auth().signInWithEmailAndPassword(values.email, values.password).catch(function(err) {
       error = err;
-      console.log(`Error code: ${err.code}, error msg: ${err.message} `);
-      console.log('Add modal here');
+      this.setState({ modalText: 'Something went wrong. Please try again', showModal: true });
     }).then(result => {
       if (_.isEmpty(error)) {
         const [name, surname] = result.user.displayName.split(' ');
         const userData = { email: values.email, name, surname };
         this.props.signUserIn(userData);
       } else {
-        console.log('Add modal here');
+        this.setState({ modalText: 'Something went wrong. Please try again', showModal: true });
       }
     });
   }
 
+  toggleModal() {
+    this.setState({ showModal: !this.state.showModal });
+  }
+
+  displayModal() {
+    return (this.state.showModal)
+      ? <Modal onCloseRequest={() => this.toggleModal()} text={this.state.modalText} />
+      : null;
+  }
+
+  mouseDown(e) {
+    if (this.state.showModal && !e.target.className.includes('modal__')) {
+      this.toggleModal();
+    }
+  }
+
+  keyDown(e) {
+    if (this.state.showModal && e.keyCode === 27) {
+      this.toggleModal();
+    }
+  }
+
   render() {
+    let modal = this.displayModal();
+
     return (
       <div>
         <form
@@ -59,6 +92,7 @@ class SignIn extends Component {
           />
           <button className="authentication__form-button" type="submit">Sign in</button>
         </form>
+        {modal}
       </div>
     );
   }

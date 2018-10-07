@@ -2,8 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { signUserIn } from '../../../actions';
+import Modal from '../../../components/Modal/modal';
 
 class SignUp extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      modalText: '',
+      showModal: false
+    };
+  }
+
   renderField(field) {
     const textError = `${field.meta.touched && field.meta.error ? field.meta.error : ''}`;
 
@@ -33,10 +43,9 @@ class SignUp extends Component {
       displayName: `${data.name} ${data.surname}`
     }).then(() => {
       const userData = ( ({ name, surname, email }) => ({ name, surname, email }) )(data);
-      console.log('Add modal here (succesfully updated)');
       this.props.signUserIn(userData);
     }).catch((error) => {
-      console.log('Add modal here (unsuccessful update)');
+      this.setState({ modalText: 'Something went wrong. Please try again', showModal: true });
     });
   }
 
@@ -44,18 +53,42 @@ class SignUp extends Component {
     let error = {};
     firebase.auth().createUserWithEmailAndPassword(values.email, values.password).catch((err) => {
       error = err;
-      console.log('Add modal here');
+      this.setState({ modalText: 'Something went wrong. Please try again', showModal: true });
     }).then(() => {
       if (_.isEmpty(error)) {
         this.updateFirebaseList(values.email);
         this.updateUser(values);
       } else {
-        console.log('Add modal here');
+        this.setState({ modalText: 'Something went wrong. Please try again', showModal: true });
       }
     });
   }
 
+  toggleModal() {
+    this.setState({ showModal: !this.state.showModal });
+  }
+
+  displayModal() {
+    return (this.state.showModal)
+      ? <Modal onCloseRequest={() => this.toggleModal()} text={this.state.modalText} />
+      : null;
+  }
+
+  mouseDown(e) {
+    if (this.state.showModal && !e.target.className.includes('modal__')) {
+      this.toggleModal();
+    }
+  }
+
+  keyDown(e) {
+    if (this.state.showModal && e.keyCode === 27) {
+      this.toggleModal();
+    }
+  }
+
   render() {
+    let modal = this.displayModal();
+
     return (
       <div>
         <form className="authentication__form" onSubmit={this.props.handleSubmit(this.createAccount.bind(this))}>
@@ -91,6 +124,7 @@ class SignUp extends Component {
           />
           <button className="authentication__form-button" type="submit">Sign up</button>
         </form>
+        {modal}
       </div>
     );
   }

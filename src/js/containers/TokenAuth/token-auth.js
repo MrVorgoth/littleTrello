@@ -14,7 +14,7 @@ class TokenAuth extends Component {
     }
 
     firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
+      if (user && user.displayName != null) {
         const [name, surname] = user.displayName.split(' ');
         const userData = { email: user.email, name, surname };
         this.props.signUserIn(userData);
