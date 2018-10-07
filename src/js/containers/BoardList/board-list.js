@@ -10,8 +10,14 @@ class BoardList extends Component {
     super(props);
   }
 
+  componentDidMount() {
+    if (_.isEmpty(this.props.authenticationData.email)) {
+      this.props.history.push('/');
+    }
+  }
+
   render() {
-    if (_.isEmpty(this.props.authenticationData)) {
+    if (_.isEmpty(this.props.authenticationData.email)) {
       return null;
     }
 
@@ -20,9 +26,9 @@ class BoardList extends Component {
         <Nav transparent={false} />
         <div className="trello-container">
           <section className="trello">
-            <Board board='todo' name="Todo" input />
-            <Board board='doing' name="Doing" />
-            <Board board='done' name="Done" />
+            <Board boards={['Todo', 'Doing', 'Done']} board='todo' name="Todo" input />
+            <Board boards={['Todo', 'Doing', 'Done']} board='doing' name="Doing" />
+            <Board boards={['Todo', 'Doing', 'Done']} board='done' name="Done" />
           </section>
         </div>
         <Footer />

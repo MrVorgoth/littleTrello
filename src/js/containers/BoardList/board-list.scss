@@ -20,12 +20,11 @@
 }
 
 .trello__board {
-  position: relative;
   margin: 2%;
   padding: 1% 1% 6%;
   min-width: 350px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-  background-color: #A7B8D2;
+  background-color: $board-color;
 
   &:focus {
     outline: none;
@@ -44,6 +43,10 @@
   border-bottom: 2px solid $primary-color;
 }
 
+.trello__item-container {
+  position: relative;
+}
+
 .trello__item {
   padding: 2%;
   font-size: 1.5em;
@@ -52,7 +55,8 @@
   background-color: $primary-color;
 }
 
-.trello__item-delete {
+.trello__item-delete,
+.trello__item-advanced-button {
   float: right;
   font-size: 0.8em;
   font-family: $primary-font;
@@ -60,6 +64,41 @@
   &:hover {
     cursor: pointer;
   }
+}
+
+.trello__item-advanced-button {
+  width: 20px;
+  height: 20px;
+  background: url('../../../assets/img/bars.svg') no-repeat center;
+  background-size: cover;
+}
+
+.trello__item-advanced-container {
+  z-index: 2;
+  position: absolute;
+  padding: 5px 0;
+  color: $primary-color;
+  background-color: darken($board-color, 10%);
+  border: 2px solid $primary-color;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.trello__item-advanced-container--hidden {
+  display: none;
+}
+
+.trello__item-advanced-option {
+  padding: 10px 10px 0;
+}
+
+.trello__item-advanced-select {
+  padding: 5px;
+  margin-left: 10px;
+  border: 2px solid $font-color;
+  font-size: 0.8em;
+  font-weight: bold;
+  font-family: 'OpenSansLight';
+  letter-spacing: 1px;
 }
 
 .trello__placeholder {
@@ -75,9 +114,7 @@
 }
 
 .trello__input-container {
-  position: absolute;
   width: 100%;
-  bottom: 3%;
 }
 
 .trello__input {
@@ -87,7 +124,8 @@
 }
 
 .trello__button {
-  padding: 1% 4%;
+  padding: 2px 12px;
+  margin-left: 10px;
   font-size: 1em;
   border-radius: 30px;
   border: 2px solid darken($primary-color, 10%);

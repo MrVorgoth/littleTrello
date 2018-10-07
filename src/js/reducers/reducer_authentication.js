@@ -9,7 +9,7 @@ const initialState = {
 export default function(state = initialState, action) {
   switch (action.type) {
     case SIGN_IN:
-      const { email, name, surname } = action.payload;
+      const { email, name, surname, boards } = action.payload;
       return { ...state, name, surname, email };
     case SIGN_OUT:
       return initialState;

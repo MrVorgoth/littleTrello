@@ -13,8 +13,6 @@ class Nav extends Component {
   signOut() {
     firebase.auth().signOut().then(() => {
       this.props.signUserOut();
-    }).catch((error) => {
-      console.log('Add modal here');
     });
   }
 
@@ -49,14 +47,13 @@ class Nav extends Component {
   }
 
   render() {
-    console.log(this.props.authenticationData);
     let component = this.renderNavItems();
 
     return (
       <nav className={`nav ${this.props.transparent === false ? 'nav--background' : ''}`}>
         <div className="nav__logo">
           <Link to="/">
-            <img src={require('../../../assets/img/logo.png')} />
+            <img className="nav__logo-img" src={require('../../../assets/img/cubes.svg')} />
           </Link>
         </div>
         {component}
