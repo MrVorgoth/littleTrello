@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { firebaseSendData, firebaseDeleteData } from '../../../firebase';
 import Modal from '../../../components/Modal/modal';
 import AdvancedEdit from './board-advanced-edit';
 
@@ -14,11 +15,12 @@ class Board extends Component {
     this.state = {
       board: this.props.board,
       boardArr: [],
-      term: '',
+      editTask: { task: '', board: '', tasks: '' },
       modalText: '',
-      showModal: false,
       showAdvancedEdit: false,
-      editTask: { task: '', board: '', tasks: '' }
+      showAdvancedEditPos: { x: 0, y: 0 },
+      showModal: false,
+      term: '',
     };
   }
 
@@ -43,30 +45,6 @@ class Board extends Component {
     });
   }
 
-  firebaseSendData(task) {
-    const db = firebase.firestore();
-    const collection = db.collection(this.state.board).doc(this.props.authenticationData.email);
-    let boardTasks = this.state.board + 'Tasks';
-    let arr = this.state.boardArr;
-    (arr.indexOf(task) == -1) ? arr.push(task) : console.log('Task already exists');
-
-    collection.update({ [boardTasks]: arr });
-  }
-
-  firebaseDeleteData(task, board, boardTasks) {
-    const db = firebase.firestore();
-    const collection = db.collection(board).doc(this.props.authenticationData.email);
-    let boardTasksName = board + 'Tasks';
-    let arr = boardTasks;
-    (arr.indexOf(task) > -1) ? arr.splice(arr.indexOf(task), 1) : console.log('Task doesnt exist');
-
-    collection.update({ [boardTasksName]: arr });
-  }
-
-  deleteData(e) {
-    this.firebaseDeleteData(e.target.getAttribute('item'), this.state.board, this.state.boardArr);
-  }
-
   renderBoard() {
     if (_.isEmpty(this.state.boardArr)) {
       return;
@@ -84,7 +62,7 @@ class Board extends Component {
         <span
           item={element}
           className="trello__item-advanced-button"
-          onClick={() => this.createAdvancedOptions(element, this.state.board, this.state.boardArr)}
+          onClick={(event) => this.createAdvancedEdit(element, this.state.board, this.state.boardArr, event)}
         ></span>
         </p>
       );
@@ -93,14 +71,28 @@ class Board extends Component {
     return boardTasks;
   }
 
-  togglePlaceholder(displayPlaceholder) {
-    if (displayPlaceholder && (this.currentBoard !== this.state.board)) {
-      this.refs.placeholder.classList.add('trello__placeholder--active');
-      this.refs.placeholder.classList.remove('trello__placeholder--hidden');
-    } else {
-      this.refs.placeholder.classList.add('trello__placeholder--hidden');
-      this.refs.placeholder.classList.remove('trello__placeholder--active');
-    }
+  renderInput() {
+    return (this.props.input)
+      ? <div className='trello__input-container'>
+          <input
+            className='trello__input'
+            type="text"
+            value={this.state.term}
+            onChange={this.updateInput.bind(this)}
+          />
+          <button
+            className='trello__button'
+            onClick={() => { if (this.state.term !== '') {
+              firebaseSendData(this.state.term, this.state.board, this.state.boardArr, this.props.authenticationData.email)
+            }}}
+          >Add task
+          </button>
+        </div>
+      : null;
+  }
+
+  updateInput(e) {
+    this.setState({ term: e.target.value });
   }
 
   dragStart(e) {
@@ -132,93 +124,78 @@ class Board extends Component {
     this.counter = 0;
     this.togglePlaceholder(false);
 
-    const task = e.dataTransfer.getData('target');
-    const board = e.dataTransfer.getData('board');
-    const boardTasks = e.dataTransfer.getData('boardTasks');
-    if (board !== this.state.board) {
-      this.firebaseSendData(task);
-      this.firebaseDeleteData(task, board, boardTasks.split('|'));
-    } else {
-      // this.setState({ modalText: 'You can\'t put task to the same board', showModal: true });
+    if (e.dataTransfer.getData('board') !== this.state.board) {
+      firebaseSendData(e.dataTransfer.getData('target'), this.state.board, this.state.boardArr, this.props.authenticationData.email);
+      firebaseDeleteData(e.dataTransfer.getData('target'), e.dataTransfer.getData('board'), e.dataTransfer.getData('boardTasks').split('|'), this.props.authenticationData.email);
     }
   }
 
-  handleToggleModal() {
+  togglePlaceholder(displayPlaceholder) {
+    if (displayPlaceholder && (this.currentBoard !== this.state.board)) {
+      this.refs.placeholder.classList.add('trello__placeholder--active');
+      this.refs.placeholder.classList.remove('trello__placeholder--hidden');
+    } else {
+      this.refs.placeholder.classList.add('trello__placeholder--hidden');
+      this.refs.placeholder.classList.remove('trello__placeholder--active');
+    }
+  }
+
+  toggleModal() {
     this.setState({ showModal: !this.state.showModal });
   }
 
   displayModal() {
     return (this.state.showModal)
-      ? <Modal onCloseRequest={() => this.handleToggleModal()} text={this.state.modalText} />
+      ? <Modal onCloseRequest={() => this.toggleModal()} text={this.state.modalText} />
       : null;
+  }
+
+  mouseLeave() {
+    this.setState({ showAdvancedEdit: false });
   }
 
   mouseDown(e) {
     if (this.state.showModal && !e.target.className.includes('modal__')) {
-      this.handleToggleModal();
+      this.toggleModal();
     }
     if (this.state.showAdvancedEdit && !e.target.className.includes('trello__item-advanced')) {
-      this.toggleAdvancedOptions();
+      this.toggleAdvancedEdit();
     }
-    // if (e.target.className.includes('trello__item-advanced-option')) {
-    //   this.toggleAdvancedOptions();
-    // }
   }
 
   keyDown(e) {
     if (this.state.showModal && e.keyCode === 27) {
-      this.handleToggleModal();
+      this.toggleModal();
     }
     if (this.state.showAdvancedEdit && e.keyCode === 27) {
-      this.toggleAdvancedOptions();
+      this.toggleAdvancedEdit();
     }
   }
 
-  createAdvancedOptions(task, board, tasks) {
+  createAdvancedEdit(task, board, tasks, event) {
     this.setState({ editTask: { task, board, tasks } });
-    this.toggleAdvancedOptions();
+    this.toggleAdvancedEdit(event);
   }
 
-  toggleAdvancedOptions(event) {
-    // let rect = event.target.getBoundingClientRect();
-    // console.log(window.innerHeight);
-    // console.log(rect);
-    // console.log(event.parent);
-    (event)
-      ? this.setState({
-        showAdvancedEdit: !this.state.showAdvancedEdit
-      })
-      : this.setState({
-        showAdvancedEdit: !this.state.showAdvancedEdit
+  toggleAdvancedEdit(event) {
+    if (event) {
+      let rect = event.target.getBoundingClientRect();
+      this.setState({
+        showAdvancedEdit: !this.state.showAdvancedEdit,
+        showAdvancedEditPos: { x: window.innerWidth - rect.left, y: window.pageYOffset + rect.top - 30 }
       });
+    } else {
+      this.setState({
+        showAdvancedEdit: !this.state.showAdvancedEdit,
+        showAdvancedEditPos: { x: 0, y: 0 }
+      });
+    }
   }
 
   displayAdvancedEdit() {
     return (this.state.showAdvancedEdit)
-      ? <AdvancedEdit editTask={this.state.editTask} />
+      ? <AdvancedEdit editTask={this.state.editTask} boards={this.props.boards} position={this.state.showAdvancedEditPos} />
       : null;
-  }
-
-  renderInput() {
-    return (this.props.input)
-      ? <div className='trello__input-container'>
-          <input
-            className='trello__input'
-            type="text"
-            value={this.state.term}
-            onChange={this.updateInput.bind(this)}
-          />
-          <button
-            className='trello__button'
-            onClick={() => this.firebaseSendData(this.state.term)}
-          >Add task
-          </button>
-        </div>
-      : null;
-  }
-
-  updateInput(e) {
-    this.setState({ term: e.target.value });
   }
 
   render() {
@@ -230,9 +207,10 @@ class Board extends Component {
     return (
       <div
         tabIndex='0'
+        className='trello__board'
         onKeyDown={this.keyDown.bind(this)}
         onMouseDown={this.mouseDown.bind(this)}
-        className='trello__board'
+        onMouseLeave={this.mouseLeave.bind(this)}
         onDrop={this.drop.bind(this)}
         onDragOver={this.dragOver.bind(this)}
         onDragEnter={this.dragEnter.bind(this)}

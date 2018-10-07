@@ -1,13 +1,21 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { firebaseSendData, firebaseDeleteData } from '../../../firebase';
 
 class AdvancedEdit extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      destinationBoard: 'todo',
+      destinationBoard: this.props.editTask.board,
+      shouldHide: true
+    }
+  }
+
+  componentDidMount() {
+    if (this.state.shouldHide) {
+      this.setState({ shouldHide: false });
     }
   }
 
@@ -19,63 +27,63 @@ class AdvancedEdit extends Component {
     const db = firebase.firestore();
     db.settings({timestampsInSnapshots: true});
     const collection = db.collection(this.state.destinationBoard).doc(this.props.authenticationData.email);
-    let boardTasks = this.state.destinationBoard + 'Tasks';
+
     let tasksData;
 
     collection.get().then(doc => {
-      // console.log('UNDEFINED check with lodash isEmpty or smth');
-      if (doc.data() !== undefined) {
-        tasksData = doc.data()[boardTasks];
-        this.firebaseDeleteData(this.props.editTask.task, this.props.editTask.board, this.props.editTask.tasks);
+      if (!_.isEmpty(doc.data())) {
+        tasksData = doc.data()[this.state.destinationBoard + 'Tasks'];
+        firebaseDeleteData(this.props.editTask.task, this.props.editTask.board, this.props.editTask.tasks, this.props.authenticationData.email);
       }
     }).then(() => {
-      this.firebaseSendData(this.props.editTask.task, this.state.destinationBoard, tasksData);
+      firebaseSendData(this.props.editTask.task, this.state.destinationBoard, tasksData, this.props.authenticationData.email);
     });
-  }
 
-  firebaseSendData(task, board, boardTasks) {
-    const db = firebase.firestore();
-    const collection = db.collection(board).doc(this.props.authenticationData.email);
-    let boardTasksName = board + 'Tasks';
-    let arr = boardTasks;
-    (arr.indexOf(task) == -1) ? arr.push(task) : console.log('Task already exists');
-
-    collection.update({ [boardTasksName]: arr });
-  }
-
-  firebaseDeleteData(task, board, boardTasks) {
-    const db = firebase.firestore();
-    const collection = db.collection(board).doc(this.props.authenticationData.email);
-    let boardTasksName = board + 'Tasks';
-    let arr = boardTasks;
-    (arr.indexOf(task) > -1) ? arr.splice(arr.indexOf(task), 1) : console.log('Task doesnt exist');
-
-    collection.update({ [boardTasksName]: arr });
+    this.setState({ shouldHide: true });
   }
 
   renderEditOptions() {
-    // console.log('dobrac selected od aktualnej tablicy');
-    return (
-      <React.Fragment>
-        <option value="todo">todo</option>
-        <option value="doing">doing</option>
-        <option value="done">done</option>
-      </React.Fragment>
-    );
+    const editOptions = this.props.boards.map((element, index) => {
+      return (
+        <option
+          key={index}
+          value={element.toLowerCase()}
+        >{element}
+        </option>
+      );
+    });
+
+    return editOptions;
   }
 
   render() {
     const editOptions = this.renderEditOptions();
 
     return (
-      <div className="trello__item-advanced-container">
-        <div className="trello__item-advanced-option">Move to
-          <select className="trello__item-advanced-select" onChange={(e) => this.setState({ destinationBoard: e.target.value })}>
-            {editOptions}
+      <div
+        className={`trello__item-advanced-container ${this.state.shouldHide ? 'trello__item-advanced-container--hidden' : ''}`}
+        style={{top: this.props.position.y, right: this.props.position.x}}
+      >
+        <div className="trello__item-advanced-option">Move task to
+          <select
+            defaultValue={this.props.editTask.board}
+            className="trello__item-advanced-select"
+            onChange={(e) => this.setState({ destinationBoard: e.target.value })}
+          >{editOptions}
           </select>
-          <button className="trello__item-advanced-option" onClick={this.moveItem.bind(this)}>Move</button>
+          <button
+            className="trello__button trello__item-advanced-option"
+            onClick={this.moveItem.bind(this)}
+          >Move
+          </button>
         </div>
-        <button className="trello__item-advanced-option">Delete item</button>
+        <div className="trello__item-advanced-option">Delete task
+          <button
+            className="trello__button trello__item-advanced-option"
+            onClick={() => { firebaseDeleteData(this.props.editTask.task, this.props.editTask.board, this.props.editTask.tasks, this.props.authenticationData.email); this.setState({ shouldHide: true }); }}
+          >Delete
+          </button>
+        </div>
       </div>
     );
   }

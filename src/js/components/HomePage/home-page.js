@@ -10,20 +10,28 @@ export default class HomePage extends Component {
   constructor(props) {
     super(props);
 
+    this.unmounted = true;
+
     this.state = {
       transparent: true
     };
   }
 
   componentDidMount() {
+    this.unmounted = false;
     window.addEventListener('scroll', this.handleScroll.bind(this));
   }
 
   componentWillUnmount() {
+    this.unmounted = true;
     window.removeEventListener('scroll', this.handleScroll.bind(this));
   }
 
-  handleScroll(e) {
+  handleScroll() {
+    if (this.unmounted) {
+      return;
+    }
+
     if (window.scrollY > 100) {
       if (this.state.transparent == true) {
         this.setState({ transparent: false });
