@@ -16,7 +16,9 @@
 .modal__content {
   width: 80%;
   padding: 2%;
-  margin: 15% auto;
+  position: absolute;
+  top: 40%;
+  left: 5%;
   border: 1px solid $font-color;
   background-color: $primary-color;
 }
