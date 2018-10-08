@@ -33,7 +33,7 @@ class SignIn extends Component {
 
   signInToAccount(values) {
     let error = {};
-    firebase.auth().signInWithEmailAndPassword(values.email, values.password).catch(function(err) {
+    firebase.auth().signInWithEmailAndPassword(values.email, values.password).catch((err) => {
       error = err;
       this.setState({ modalText: 'Something went wrong. Please try again', showModal: true });
     }).then(result => {
