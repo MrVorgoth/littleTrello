@@ -4,6 +4,7 @@
 @import "../js/components/Pricing/pricing.scss";
 @import "../js/components/Footer/footer.scss";
 @import "../js/components/Modal/modal.scss";
+@import "../js/components/ErrorPage/error-page.scss";
 @import "../js/containers/Authentication/SignIn/sign-in.scss";
 @import "../js/containers/Authentication/SignInSocial/sign-in-social.scss";
 @import "./colors.scss";
@@ -34,4 +35,8 @@ body {
   padding: 0;
   color: $font-color;
   font-family: $primary-font;
+}
+
+a {
+  text-decoration: none;
 }

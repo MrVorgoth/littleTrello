@@ -7,6 +7,7 @@ import promise from 'redux-promise';
 import reducers from './reducers';
 
 import HomePage from './components/HomePage/home-page';
+import ErrorPage from './components/ErrorPage/error-page';
 import Authentication from './containers/Authentication/authentication';
 import BoardList from './containers/BoardList/board-list';
 import TokenAuth from './containers/TokenAuth/token-auth';
@@ -21,7 +22,8 @@ ReactDOM.render(
         <Switch>
           <Route path="/board" component={BoardList} />
           <Route path="/sign" component={Authentication} />
-          <Route path="" component={HomePage} />
+          <Route exact path="/" component={HomePage} />
+          <Route component={ErrorPage} />
         </Switch>
       </div>
     </BrowserRouter>
