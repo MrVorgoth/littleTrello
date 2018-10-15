@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { firebaseSendData, firebaseDeleteData } from '../../../firebase';
 import Modal from '../../../components/Modal/modal';
 import AdvancedEdit from './board-advanced-edit';
+import Loading from '../../../components/Loading/loading';
 
 class Board extends Component {
   constructor(props) {
@@ -21,6 +22,7 @@ class Board extends Component {
       showAdvancedEditPos: { x: 0, y: 0 },
       showModal: false,
       term: '',
+      showLoading: true,
     };
   }
 
@@ -40,7 +42,8 @@ class Board extends Component {
 
     collection.onSnapshot(doc => {
       if (doc.data() !== undefined) {
-        this.setState({ boardArr: doc.data()[boardTasks] });
+        this.setState({ boardArr: doc.data()[boardTasks], showLoading: false });
+        // this.setState({ boardArr: doc.data()[boardTasks] });
       }
     });
   }
@@ -140,6 +143,16 @@ class Board extends Component {
     }
   }
 
+  toggleLoading() {
+    this.setState({ showLoading: !this.state.showLoading });
+  }
+
+  displayLoading() {
+    return (this.state.showLoading)
+      ? <Loading />
+      : null;
+  }
+
   toggleModal() {
     this.setState({ showModal: !this.state.showModal });
   }
@@ -202,6 +215,7 @@ class Board extends Component {
     let component = this.renderBoard();
     let input = this.renderInput();
     let modal = this.displayModal();
+    let loading = this.displayLoading();
     let advancedEdit = this.displayAdvancedEdit();
 
     return (
@@ -228,6 +242,7 @@ class Board extends Component {
           </p>
         </div>
         {modal}
+        {loading}
         {input}
         {advancedEdit}
       </div>

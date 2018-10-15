@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { signUserIn } from '../../../actions';
 import Modal from '../../../components/Modal/modal';
+import Loading from '../../../components/Loading/loading';
 
 class SignIn extends Component {
   constructor(props) {
@@ -11,7 +12,8 @@ class SignIn extends Component {
 
     this.state = {
       modalText: '',
-      showModal: false
+      showModal: false,
+      showLoading: false,
     };
   }
 
@@ -32,10 +34,11 @@ class SignIn extends Component {
   }
 
   signInToAccount(values) {
+    this.toggleLoading();
     let error = {};
     firebase.auth().signInWithEmailAndPassword(values.email, values.password).catch((err) => {
       error = err;
-      this.setState({ modalText: 'Something went wrong. Please try again', showModal: true });
+      this.setState({ modalText: 'Something went wrong. Please try again', showModal: true, showLoading: false });
     }).then(result => {
       if (_.isEmpty(error)) {
         const [name, surname] = result.user.displayName.split(' ');
@@ -45,6 +48,16 @@ class SignIn extends Component {
         this.setState({ modalText: 'Something went wrong. Please try again', showModal: true });
       }
     });
+  }
+
+  toggleLoading() {
+    this.setState({ showLoading: !this.state.showLoading });
+  }
+
+  displayLoading() {
+    return (this.state.showLoading)
+      ? <Loading />
+      : null;
   }
 
   toggleModal() {
@@ -71,6 +84,7 @@ class SignIn extends Component {
 
   render() {
     let modal = this.displayModal();
+    let loading = this.displayLoading();
 
     return (
       <div>
@@ -93,6 +107,7 @@ class SignIn extends Component {
           <button className="authentication__form-button" type="submit">Sign in</button>
         </form>
         {modal}
+        {loading}
       </div>
     );
   }

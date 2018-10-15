@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { signUserIn } from '../../../actions';
 import Modal from '../../../components/Modal/modal';
+import Loading from '../../../components/Loading/loading';
 
 class SignUp extends Component {
   constructor(props) {
@@ -10,7 +11,8 @@ class SignUp extends Component {
 
     this.state = {
       modalText: '',
-      showModal: false
+      showModal: false,
+      showLoading: false,
     };
   }
 
@@ -50,10 +52,11 @@ class SignUp extends Component {
   }
 
   createAccount(values) {
+    this.toggleLoading();
     let error = {};
     firebase.auth().createUserWithEmailAndPassword(values.email, values.password).catch((err) => {
       error = err;
-      this.setState({ modalText: 'Something went wrong. Please try again', showModal: true });
+      this.setState({ modalText: 'Something went wrong. Please try again', showModal: true, showLoading: false });
     }).then(() => {
       if (_.isEmpty(error)) {
         this.updateFirebaseList(values.email);
@@ -62,6 +65,16 @@ class SignUp extends Component {
         this.setState({ modalText: 'Something went wrong. Please try again', showModal: true });
       }
     });
+  }
+
+  toggleLoading() {
+    this.setState({ showLoading: !this.state.showLoading });
+  }
+
+  displayLoading() {
+    return (this.state.showLoading)
+      ? <Loading />
+      : null;
   }
 
   toggleModal() {
@@ -88,10 +101,14 @@ class SignUp extends Component {
 
   render() {
     let modal = this.displayModal();
+    let loading = this.displayLoading();
 
     return (
       <div>
-        <form className="authentication__form" onSubmit={this.props.handleSubmit(this.createAccount.bind(this))}>
+        <form
+          className="authentication__form"
+          onSubmit={this.props.handleSubmit(this.createAccount.bind(this))}
+        >
         <Field
             name="name"
             label="Name"
@@ -125,6 +142,7 @@ class SignUp extends Component {
           <button className="authentication__form-button" type="submit">Sign up</button>
         </form>
         {modal}
+        {loading}
       </div>
     );
   }
