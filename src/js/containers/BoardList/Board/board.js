@@ -43,7 +43,6 @@ class Board extends Component {
     collection.onSnapshot(doc => {
       if (doc.data() !== undefined) {
         this.setState({ boardArr: doc.data()[boardTasks], showLoading: false });
-        // this.setState({ boardArr: doc.data()[boardTasks] });
       }
     });
   }
