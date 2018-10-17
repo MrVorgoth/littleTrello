@@ -4,8 +4,8 @@
   "description": "Little Trello with FireBase",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server -d --config webpack.config.js",
-    "build": "webpack --config webpack.config.js"
+    "start": "webpack-dev-server -d --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js"
   },
   "keywords": [
     "webpack",
@@ -29,7 +29,9 @@
     "firebase-tools": "^4.1.2",
     "html-loader": "^0.5.5",
     "lodash": "^4.17.10",
+    "mini-css-extract-plugin": "^0.4.4",
     "node-sass": "^4.9.3",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss": "^7.0.1",
     "postcss-loader": "^2.1.6",
     "react": "^16.4.1",
@@ -47,6 +49,7 @@
     "webpack-dev-server": "^3.1.5"
   },
   "devDependencies": {
-    "babel-plugin-transform-object-rest-spread": "^6.26.0"
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "webpack-merge": "^4.1.4"
   }
 }

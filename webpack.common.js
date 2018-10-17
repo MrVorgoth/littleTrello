@@ -1,4 +1,6 @@
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -8,13 +10,6 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, './dist'),
     publicPath: '/'
-  },
-  mode: 'development',
-  devServer: {
-    contentBase: "dist",
-    overlay: true,
-    publicPath: '',
-    historyApiFallback: true
   },
   module: {
     rules: [
@@ -26,12 +21,8 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.css$/,
-        use: [{ loader: 'style-loader' }, { loader: 'css-loader' }]
-      },
-      {
         test: /\.scss$/,
-        use: [{ loader: 'style-loader' }, { loader: 'css-loader' }, { loader: 'postcss-loader' }, { loader: 'sass-loader' }]
+        use: [{ loader: MiniCssExtractPlugin.loader }, { loader: 'css-loader' }, { loader: 'postcss-loader' }, { loader: 'sass-loader' }]
       },
       {
         test: /\.html$/,
@@ -42,13 +33,19 @@ module.exports = {
         ]
       },
       {
-        test: /\.(jpg|jpeg|png|gif|ico)$/,
-        use: [{ loader: 'file-loader', options: { filename: 'assets/[name].[ext]' }}]
+        test: /\.(jpg|jpeg|png|gif|ico|svg)$/,
+        use: [
+          { loader: 'file-loader', options: { name: 'assets/img/[name].[ext]' }}
+        ]
       },
       {
-        test: /\.(eot|svg|ttf|woff|woff2)$/,
-        use: [{ loader: 'file-loader', options: { filename: 'assets/[name].[ext]' }}]
+        test: /\.(eot|ttf|woff|woff2)$/,
+        use: [{ loader: 'file-loader', options: { name: 'assets/fonts/[name].[ext]' }}]
       }
     ]
-  }
+  },
+  plugins: [
+    new OptimizeCssAssetsPlugin(),
+    new MiniCssExtractPlugin()
+  ]
 };
